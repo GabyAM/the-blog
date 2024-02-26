@@ -77,6 +77,25 @@ export function Home() {
                     </button>
                 </div>
             </main>
+            <footer>
+                    <div className="logo">
+                        <img src="/logo.png"></img>
+                    </div>
+                    <nav className="flex-col">
+                        <h2>Repositories</h2>
+                        <ul className="flex-col">
+                            <a href="https://github.com/GabyAM/odin-blog">
+                                <li>Blog</li>
+                            </a>
+                            <a href="https://github.com/GabyAM/odin-blog-api">
+                                <li>API</li>
+                            </a>
+                            <a href="/">
+                                <li>Admin dashboard</li>
+                            </a>
+                        </ul>
+                    </nav>
+            </footer>
         </>
     );
 }
