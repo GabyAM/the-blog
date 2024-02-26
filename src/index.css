@@ -1,1 +1,22 @@
 
+:root {
+    --green-900: #0e430a;
+    --green-700: #256020;
+    --green-500: #3f783a;
+    --green-400: #5a9155;
+    --green-300: #73aa6e;
+    --green-200: #92bd8f;
+    --green-100: #b1d0af;
+    --main-grey: #edeeef;
+
+    --space-100: 8px;
+    --space-200: 12px;
+    --space-300: 16px;
+    --space-400: 24px;
+    --space-500: 32px;
+    --space-600: 48px;
+    --space-700: 72px;
+    --space-800: 96px;
+    --space-900: 160px;
+}
+
