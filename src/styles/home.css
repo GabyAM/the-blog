@@ -22,10 +22,11 @@
     gap: 4em;
 }
 
-.hero h2 {
-    font-size: 32px;
+.logo {
+    max-width: 150px;
+}
+.hero .logo {
     padding-left: var(--space-400);
-    font-weight: 400;
 }
 
 .hero .title-primary {
@@ -34,14 +35,115 @@
     margin-bottom: calc(var(--space-300) * -1);
 }
 
-.hero button {
+.rounded-button {
     font-weight: 700;
     font-size: 40px;
     background: none;
     border: 1px solid white;
     color: white;
     border-radius: 100vh;
-    padding: var(--space-300) var(--space-700);
-    max-width: 250px;
+    padding: 0.5em 2em;
+    width: fit-content;
     margin: 0 auto;
+}
+.rounded-button.inverted {
+    border: 1px solid var(--green-900);
+    color: var(--green-900);
+}
+
+main {
+    padding: var(--space-600) 0;
+    gap: var(--space-900);
+    align-items: center;
+}
+
+main > p {
+    font-size: 24px;
+    max-width: 600px;
+    margin: 0 auto;
+    color: var(--green-900);
+}
+
+.featured-posts {
+    text-align: center;
+    gap: var(--space-500);
+}
+
+.featured-posts h2 {
+    font-size: 40px;
+}
+
+.featured-posts-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 1fr 1fr;
+    gap: var(--space-600);
+}
+
+.main-post {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    grid-area: 1/1/2/3;
+    gap: var(--space-500);
+}
+.featured-post {
+    background: none;
+    border: 1px solid var(--main-grey);
+    border-radius: var(--space-300);
+    padding: var(--space-500);
+    min-height: 350px;
+    text-align: left;
+}
+
+.featured-post .post-text {
+    gap: var(--space-400);
+    color: var(--green-900);
+}
+
+.post-text h3 {
+    font-size: 32px;
+    font-weight: 500;
+}
+.main-post h3 {
+    font-size: 64px;
+}
+
+.post-text p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    font-size: 20px;
+    overflow: hidden;
+}
+.main-post p {
+    font-size: 24px;
+}
+
+.featured-post .image-container {
+    aspect-ratio: 1/1;
+}
+
+.image-container img {
+    border-radius: var(--space-300);
+}
+
+footer {
+    background: linear-gradient(
+        to bottom,
+        var(--green-900),
+        hsl(115, 100%, 6%)
+    );
+    color: white;
+    padding: var(--space-600) var(--space-700) var(--space-800);
+}
+
+footer .logo {
+    margin-bottom: var(--space-600);
+}
+footer nav {
+    gap: var(--space-400);
+}
+footer ul {
+    list-style: none;
+    gap: var(--space-200);
 }
