@@ -2,16 +2,22 @@ export function Home() {
     return (
         <>
             <div className="hero flex-col">
-                <a href="/login">Login</a>
-                <div className="hero-main-content flex-col">
-                    <div className="hero-text flex-col">
-                        <h2>The blog</h2>
-                        <h1 className="title-primary">This is a headline</h1>
+                <div className="container flex-col">
+                    <a href="/login">Login</a>
+                    <div className="hero-main-content flex-col">
+                        <div className="hero-text flex-col">
+                            <div className="logo">
+                                <img src="/logo.png"></img>
+                            </div>
+                            <h1 className="title-primary">
+                                This is a headline
+                            </h1>
+                        </div>
+                        <button className="rounded-button">Read</button>
                     </div>
-                    <button>Read</button>
                 </div>
             </div>
-            <main className="flex-col">
+            <main className="flex-col container">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
@@ -78,6 +84,7 @@ export function Home() {
                 </div>
             </main>
             <footer>
+                <div className="container">
                     <div className="logo">
                         <img src="/logo.png"></img>
                     </div>
@@ -95,6 +102,7 @@ export function Home() {
                             </a>
                         </ul>
                     </nav>
+                </div>
             </footer>
         </>
     );
