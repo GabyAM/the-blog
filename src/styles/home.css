@@ -1,0 +1,41 @@
+.hero {
+    background: linear-gradient(to bottom, var(--green-900), var(--green-500));
+    padding: var(--space-500);
+}
+
+.hero > a {
+    color: white;
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.hero .hero-main-content {
+    max-width: 400px;
+    margin: 0 auto;
+    color: white;
+    gap: 4em;
+}
+
+.hero h2 {
+    font-size: 32px;
+    padding-left: var(--space-400);
+    font-weight: 400;
+}
+
+.hero .title-primary {
+    font-size: 96px;
+    margin-top: calc(var(--space-300) * -1);
+    margin-bottom: calc(var(--space-300) * -1);
+}
+
+.hero button {
+    font-weight: 700;
+    font-size: 40px;
+    background: none;
+    border: 1px solid white;
+    color: white;
+    border-radius: 100vh;
+    padding: var(--space-300) var(--space-700);
+    max-width: 250px;
+    margin: 0 auto;
+}
