@@ -1,8 +1,10 @@
+import './styles/header.css';
+
 export function Header() {
     return (
         <header className="flex-row">
             <div className="container flex-row">
-                <div className="logo">
+                <div className="logo flex-row">
                     <img src="/logo_alternative.png"></img>
                 </div>
                 <ul className="header-links flex-row">
