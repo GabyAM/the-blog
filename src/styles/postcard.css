@@ -1,0 +1,41 @@
+.post-card {
+    border: 1px solid var(--dark-grey);
+    border-radius: var(--space-200);
+    padding: var(--space-600) var(--space-400);
+    box-shadow: 6px 6px 0 var(--main-grey);
+
+    display: grid;
+    grid-template-columns: 0.6fr 0.4fr;
+    gap: var(--space-500);
+}
+
+.post-card-text {
+    gap: var(--space-400);
+}
+
+.post-card-text p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.post-card h2 {
+    font-size: 48px;
+    line-height: 1.1;
+    color: var(--green-900);
+}
+
+.author-link {
+    color: var(--green-400);
+}
+
+.comment-count {
+    font-weight: 700;
+    margin-top: auto;
+}
+
+.image-container {
+    align-self: center;
+    aspect-ratio: 1/1;
+}
