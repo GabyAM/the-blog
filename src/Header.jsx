@@ -15,7 +15,7 @@ export function Header() {
                         <a href="/posts">Posts</a>
                     </li>
                 </ul>
-                <div className="user-section flex-row">
+                <div className="user-section">
                     <a href="/login">Login</a>
                     <a href="/signup">Sign up</a>
                 </div>

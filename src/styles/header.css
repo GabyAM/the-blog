@@ -33,17 +33,23 @@ header .logo {
 }
 
 .user-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: var(--space-500);
-    align-items: center;
+}
+
+.user-section a {
+    padding: 0.25em 0.8em;
+    text-align: center;
+    border-radius: 100vw;
 }
 
 .user-section a:first-of-type {
     color: var(--green-400);
+    border: 1px solid var(--green-400);
 }
 
 .user-section a:last-of-type {
     background-color: var(--green-300);
     color: white;
-    padding: 0.25em 0.8em;
-    border-radius: 100vw;
 }
