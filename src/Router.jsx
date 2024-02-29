@@ -9,8 +9,9 @@ export function Router() {
             element: <Home></Home>
         },
         {
-            path: 'posts',
-            element: <App></App>
+            path: '/posts',
+            element: <Posts></Posts>
+        },
         }
     ]);
 
