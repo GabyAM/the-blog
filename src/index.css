@@ -54,3 +54,9 @@ a {
     display: flex;
     flex-direction: row;
 }
+
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 0 auto;
+}

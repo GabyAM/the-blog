@@ -1,0 +1,8 @@
+.posts.container {
+    max-width: 800px;
+    padding: var(--space-500) 0;
+}
+
+.posts {
+    gap: var(--space-700);
+}

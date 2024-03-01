@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Header } from './Header';
 import { PostCard } from './PostCard';
+import './styles/posts.css';
+
 export function Posts() {
     const [posts, setPosts] = useState([]);
     useEffect(() => {

@@ -3,12 +3,6 @@
     padding: var(--space-500);
 }
 
-.container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 0 auto;
-}
-
 .hero a {
     color: white;
     margin-right: 0;
