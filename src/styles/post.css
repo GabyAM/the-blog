@@ -1,0 +1,16 @@
+.container.post-container {
+    padding-bottom: var(--space-800);
+}
+
+.post {
+    padding: var(--space-400) var(--space-900) var(--space-600);
+    gap: var(--space-600);
+}
+.post h1 {
+    color: var(--green-900);
+    font-size: 64px;
+    font-weight: 500;
+}
+.post p {
+    font-size: 20px;
+}
