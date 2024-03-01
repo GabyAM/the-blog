@@ -1,5 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import { Header } from './Header';
+import { Comments } from './Comments';
 
 export function Post() {
     const post = useLoaderData();
@@ -11,6 +12,7 @@ export function Post() {
                     <h1 className="title-primary">{post.title}</h1>
                     <p>{post.text}</p>
                 </div>
+                <Comments postId={post._id}></Comments>
             </div>
         </>
     );

@@ -1,0 +1,16 @@
+.comment {
+    max-height: var(--space-900);
+}
+
+.comment.expanded {
+    max-height: none;
+}
+
+.comment p.overflown {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
