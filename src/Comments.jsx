@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Comment } from './Comment';
+import './styles/comments.css';
 
 export function Comments({ postId }) {
     const [hidden, setHidden] = useState(true);
