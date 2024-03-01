@@ -1,0 +1,17 @@
+import { useLoaderData } from 'react-router-dom';
+import { Header } from './Header';
+
+export function Post() {
+    const post = useLoaderData();
+    return (
+        <>
+            <Header></Header>
+            <div className="container flex-col">
+                <div className="post flex-col">
+                    <h1 className="title-primary">{post.title}</h1>
+                    <p>{post.text}</p>
+                </div>
+            </div>
+        </>
+    );
+}
