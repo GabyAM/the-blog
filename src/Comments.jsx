@@ -1,57 +1,59 @@
 import { useEffect, useState } from 'react';
 import { Comment } from './Comment';
 import './styles/comments.css';
+import { useFetchData } from './hooks/useFetchData';
 
 export function Comments({ postId }) {
+    const {
+        data: comments,
+        loading,
+        error,
+        fetchData: fetchComments
+    } = useFetchData(
+        `https://odin-blog-api-beta.vercel.app/post/${postId}/comments`
+    );
+    const { data: commentCount, fetchData: fetchCommentCount } = useFetchData(
+        `https://odin-blog-api-beta.vercel.app/post/${postId}/comments/count`
+    );
     const [hidden, setHidden] = useState(true);
-    const [commentCount, setCommentCount] = useState(null);
-    const [comments, setComments] = useState([]);
+
     useEffect(() => {
-        async function fetchCommentCount() {
-            try {
-                const data = await fetch(
-                    `https://odin-blog-api-beta.vercel.app/post/${postId}/comments/count`
-                );
-                const commentCount = await data.json();
-                setCommentCount(commentCount.count);
-            } catch (e) {
-                throw new Error(e);
-            }
-        }
         fetchCommentCount();
-    }, [postId]);
+    }, [fetchCommentCount, comments]);
+
     useEffect(() => {
-        async function fetchComments() {
-            const data = await fetch(
-                `https://odin-blog-api-beta.vercel.app/post/${postId}/comments`
-            );
-            const comments = await data.json();
-            setComments(comments);
-        }
         if (!hidden) {
             fetchComments();
         }
-    }, [hidden, postId]);
+    }, [hidden, fetchComments]);
+
     return commentCount ? (
         <>
             <button
                 className="toggle-comments"
                 onClick={() => setHidden(!hidden)}
             >
-                {hidden ? `Show comments (${commentCount})` : 'Hide comments'}
+                {hidden
+                    ? `Show comments (${commentCount.count})`
+                    : 'Hide comments'}
             </button>
-            {!hidden && (
-                <div className="comments flex-col">
-                    {comments.map((comment) => {
-                        return (
-                            <Comment
-                                key={comment.id}
-                                comment={comment}
-                            ></Comment>
-                        );
-                    })}
-                </div>
-            )}
+            {!hidden &&
+                (loading ? (
+                    <span>Loading comments...</span>
+                ) : error ? (
+                    <span>{error}</span>
+                ) : (
+                    <div className="comments flex-col">
+                        {comments.map((comment) => {
+                            return (
+                                <Comment
+                                    key={comment._id}
+                                    comment={comment}
+                                ></Comment>
+                            );
+                        })}
+                    </div>
+                ))}
         </>
     ) : (
         <span>{"There's no comments yet"}</span>
