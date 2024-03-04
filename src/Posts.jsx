@@ -2,24 +2,19 @@ import { useEffect, useState } from 'react';
 import { Header } from './Header';
 import { PostCard } from './PostCard';
 import './styles/posts.css';
+import { useFetchData } from './hooks/useFetchData';
 
 export function Posts() {
-    const [posts, setPosts] = useState([]);
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const response = await fetch(
-                    'https://odin-blog-api-beta.vercel.app/published_posts'
-                );
-                const data = await response.json();
-                setPosts(data);
-            } catch (err) {
-                throw new Error(err);
-            }
-        }
-        fetchData();
-    }, []);
+    const {
+        data: posts,
+        loading,
+        error,
+        fetchData: fetchPosts
+    } = useFetchData('https://odin-blog-api-beta.vercel.app/published_posts');
 
+    useEffect(() => {
+        fetchPosts();
+    }, [fetchPosts]);
     return (
         <>
             <Header></Header>
@@ -33,6 +28,7 @@ export function Posts() {
                             title={post.title}
                             author={post.author}
                             summary={post.summary}
+                            commentCount={post.comment_count}
                         ></PostCard>
                     ))}
                 </div>
