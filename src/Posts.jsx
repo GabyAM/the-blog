@@ -3,6 +3,7 @@ import { Header } from './Header';
 import { PostCard } from './PostCard';
 import './styles/posts.css';
 import { useFetchData } from './hooks/useFetchData';
+import { PostCardSkeleton } from './PostCardSkeleton';
 
 export function Posts() {
     const {
@@ -21,16 +22,24 @@ export function Posts() {
             <div className="posts container">
                 <div className="search-bar"></div>
                 <div className="posts flex-col">
-                    {posts.map((post) => (
-                        <PostCard
-                            key={post.id}
-                            id={post._id}
-                            title={post.title}
-                            author={post.author}
-                            summary={post.summary}
-                            commentCount={post.comment_count}
-                        ></PostCard>
-                    ))}
+                    {loading ? (
+                        <>
+                            <PostCardSkeleton></PostCardSkeleton>
+                            <PostCardSkeleton></PostCardSkeleton>
+                            <PostCardSkeleton></PostCardSkeleton>
+                        </>
+                    ) : (
+                        posts.map((post) => (
+                            <PostCard
+                                key={post.id}
+                                id={post._id}
+                                title={post.title}
+                                author={post.author}
+                                summary={post.summary}
+                                commentCount={post.comment_count}
+                            ></PostCard>
+                        ))
+                    )}
                 </div>
             </div>
         </>
