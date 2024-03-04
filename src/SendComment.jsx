@@ -1,3 +1,6 @@
+import { SendIcon } from './Icons';
+import './styles/sendcomment.css';
+
 export function SendComment({ postId, onSubmit }) {
     async function commentSubmitHandler(e) {
         e.preventDefault();
@@ -32,7 +35,9 @@ export function SendComment({ postId, onSubmit }) {
                 onSubmit={commentSubmitHandler}
             >
                 <textarea name="comment-text" rows={3}></textarea>
-                <button></button>
+                <button className="flex-row">
+                    <SendIcon width={32} height={32}></SendIcon>
+                </button>
             </form>
         </div>
     );

@@ -1,0 +1,49 @@
+.comment-form-container {
+    max-width: 60%;
+}
+
+.comment-form-container > span {
+    color: var(--green-700);
+    padding-left: var(--space-400);
+}
+
+.comment-form {
+    border-radius: var(--space-300);
+    background: linear-gradient(
+        to right,
+        var(--green-100) 40%,
+        var(--green-700)
+    );
+    padding: 1px;
+    align-items: center;
+}
+.comment-form textarea {
+    display: block;
+    background: none;
+    border: none;
+    border-radius: var(--space-300);
+    resize: none;
+    flex: 1;
+    padding: var(--space-400);
+    font-size: 16px;
+    font-family: 'Poppins';
+    color: var(--dark-grey);
+    background-color: white;
+    scrollbar-width: thin;
+}
+
+.comment-form button {
+    background-color: transparent;
+    width: var(--space-600);
+    height: var(--space-600);
+    border-radius: 100vh;
+    border: none;
+    margin: 0 var(--space-100);
+    transition: background-color 0.5s ease-out;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+.comment-form button:hover {
+    background-color: var(--green-300);
+}
