@@ -13,6 +13,9 @@ export function Post() {
                     <h1 className="title-primary">{post.title}</h1>
                     <p>{post.text}</p>
                 </div>
+            </div>
+            <div className="horizontal-separator"></div>
+            <div className="container flex-col">
                 <Comments postId={post._id}></Comments>
             </div>
         </>

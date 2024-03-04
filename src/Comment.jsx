@@ -40,7 +40,7 @@ export function Comment({ comment }) {
                 </div>
             </div>
             {comment.comments.map((reply) => (
-                <Comment key={reply.id} comment={reply}></Comment>
+                <Comment key={reply._id} comment={reply}></Comment>
             ))}
         </div>
     );

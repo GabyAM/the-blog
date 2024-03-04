@@ -3,6 +3,7 @@ import { Comment } from './Comment';
 import './styles/comments.css';
 import { SendComment } from './SendComment';
 import { useFetchData } from './hooks/useFetchData';
+import { CaretIcon } from './Icons';
 
 export function Comments({ postId }) {
     const {
@@ -29,38 +30,50 @@ export function Comments({ postId }) {
     }, [hidden, fetchComments]);
 
     return (
-        <div className="comment-section">
+        <div className="comment-section flex-col">
             {commentCount ? (
                 <>
                     <SendComment
                         postId={postId}
                         onSubmit={fetchComments}
                     ></SendComment>
-                    <button
-                        className="toggle-comments"
-                        onClick={() => setHidden(!hidden)}
-                    >
-                        {hidden
-                            ? `Show comments (${commentCount.count})`
-                            : 'Hide comments'}
-                    </button>
-                    {!hidden &&
-                        (loading ? (
-                            <span>Loading comments...</span>
-                        ) : error ? (
-                            <span>{error}</span>
-                        ) : (
-                            <div className="comments flex-col">
-                                {comments.map((comment) => {
-                                    return (
-                                        <Comment
-                                            key={comment._id}
-                                            comment={comment}
-                                        ></Comment>
-                                    );
-                                })}
-                            </div>
-                        ))}
+                    <div>
+                        <button
+                            className="toggle-comments"
+                            onClick={() => setHidden(!hidden)}
+                        >
+                            <CaretIcon
+                                width={32}
+                                height={32}
+                                orient={hidden ? 'down' : 'up'}
+                            ></CaretIcon>
+                            <span>
+                                {hidden
+                                    ? `Show comments (${commentCount.count})`
+                                    : 'Hide comments'}
+                            </span>
+                        </button>
+                        {!hidden &&
+                            (loading ? (
+                                <span>Loading comments...</span>
+                            ) : error ? (
+                                <span>{error}</span>
+                            ) : (
+                                <div className="comments flex-col">
+                                    {comments.map((comment) => {
+                                        return (
+                                            <>
+                                                <Comment
+                                                    key={comment._id}
+                                                    comment={comment}
+                                                ></Comment>
+                                                <div className="horizontal-separator"></div>
+                                            </>
+                                        );
+                                    })}
+                                </div>
+                            ))}
+                    </div>
                 </>
             ) : (
                 <span>{"There's no comments yet"}</span>
@@ -68,4 +81,3 @@ export function Comments({ postId }) {
         </div>
     );
 }
-*/

@@ -1,3 +1,8 @@
+.comment-section {
+    padding: var(--space-400) 0;
+    gap: var(--space-700);
+}
+
 .toggle-comments {
     background: none;
     border: none;
@@ -5,10 +10,13 @@
     font-weight: 700;
     width: fit-content;
     padding: var(--space-100) 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--green-900);
 }
 
 .comments {
-    border: 1px solid var(--main-grey);
     border-radius: var(--space-300);
     padding: var(--space-500) var(--space-600);
     gap: var(--space-500);

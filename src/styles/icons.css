@@ -1,0 +1,8 @@
+.icon-tabler-caret-up-filled {
+    transition: transform 0.3s ease;
+}
+
+.rotated {
+    transform-origin: center;
+    transform: rotate(180deg);
+}
