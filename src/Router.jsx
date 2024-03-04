@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Home } from './Home';
 import { Posts } from './Posts';
 import { Post } from './Post';
+import { Login } from './Login';
 
 export function Router() {
     const router = createBrowserRouter([
@@ -23,6 +24,10 @@ export function Router() {
                 const post = await data.json();
                 return post;
             }
+        },
+        {
+            path: '/login',
+            element: <Login></Login>
         }
     ]);
 
