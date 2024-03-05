@@ -62,6 +62,9 @@
     height: calc(100% + var(--space-100));
     transform: translate(0, 0);
 }
+.form-input-container.error::before {
+    background-color: var(--error-red);
+}
 
 .form-input {
     width: 100%;
@@ -71,7 +74,7 @@
     padding: 0 var(--space-100);
     outline: none;
 }
-}
+
 .login-form {
     padding: var(--space-500);
     max-width: 400px;
@@ -91,6 +94,11 @@
     grid-template-rows: auto auto 14px;
 }
 
+.form-error {
+    color: var(--error-red);
+    font-size: 14px;
+    align-items: center;
+    gap: var(--space-100);
 }
 
 .fields-container {
