@@ -1,7 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import './styles/login.css';
+import { useForm } from 'react-hook-form';
+import { ErrorIcon } from './Icons';
 
 export function Login() {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors }
+    } = useForm();
     const navigate = useNavigate();
     async function authenticate(e) {
         e.preventDefault();
@@ -41,24 +48,55 @@ export function Login() {
                         <div className="fields-container flex-col">
                             <label className="flex-col">
                                 Email
-                                <div className="form-input-container">
+                                <div
+                                    className={`form-input-container ${
+                                        errors.email ? 'error' : ''
+                                    }`}
+                                >
                                     <input
                                         className="form-input"
                                         type="text"
+                                        {...register('email', {
+                                            required: 'Email is required',
+                                            pattern: {
+                                                value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                                                message:
+                                                    'Email must be in the correct format'
+                                            }
+                                        })}
                                     />
                                 </div>
+                                {errors.email && (
+                                    <span className="form-error flex-row">
+                                        <ErrorIcon></ErrorIcon>
+                                        <span>{errors.email.message}</span>
+                                    </span>
+                                )}
                             </label>
                             <label className="flex-col">
                                 Password
-                                <div className="form-input-container">
+                                <div
+                                    className={`form-input-container ${
+                                        errors.password ? 'error' : ''
+                                    }`}
+                                >
                                     <input
                                         className="form-input"
                                         type="password"
+                                        {...register('password', {
+                                            required: 'Password is required',
+                                            minLength: {
+                                                value: 8,
+                                                message:
+                                                    'Password must have at least 8 characters'
+                                            }
+                                        })}
                                     />
                                 </div>
                                 {errors.password && (
-                                    <span className="form-error">
-                                        {errors.password.message}
+                                    <span className="form-error flex-row">
+                                        <ErrorIcon></ErrorIcon>
+                                        <span>{errors.password.message}</span>
                                     </span>
                                 )}
                             </label>
