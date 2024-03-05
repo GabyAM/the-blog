@@ -10,6 +10,8 @@
     --green-200: #92bd8f;
     --green-100: #b1d0af;
     --main-grey: #edeeef;
+    --dark-grey: #9999a3;
+    --error-red: #ee5454;
 
     --space-100: 8px;
     --space-200: 12px;
@@ -26,6 +28,17 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body,
+html,
+#root {
+    min-height: 100vh;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
 }
 
 body {
