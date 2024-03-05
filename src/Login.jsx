@@ -33,30 +33,38 @@ export function Login() {
         <>
             <div className="login-layout">
                 <div className="login-form-section">
-                    <div className="login-form-container flex-col">
-                        <form
-                            className="login-form flex-col"
-                            onSubmit={authenticate}
-                        >
-                            <h1 className="title-primary">Welcome</h1>
-                            <div className="fields-container flex-col">
-                                <label className="flex-col">
-                                    Email
+                    <form
+                        className="login-form flex-col"
+                        onSubmit={handleSubmit(authenticate)}
+                    >
+                        <h1 className="title-primary">Welcome</h1>
+                        <div className="fields-container flex-col">
+                            <label className="flex-col">
+                                Email
+                                <div className="form-input-container">
                                     <input
                                         className="form-input"
                                         type="text"
-                                </label>
-                                <label className="flex-col">
-                                    Password
+                                    />
+                                </div>
+                            </label>
+                            <label className="flex-col">
+                                Password
+                                <div className="form-input-container">
                                     <input
                                         className="form-input"
                                         type="password"
                                     />
-                                </label>
-                            </div>
-                            <button>Log in</button>
-                        </form>
-                    </div>
+                                </div>
+                                {errors.password && (
+                                    <span className="form-error">
+                                        {errors.password.message}
+                                    </span>
+                                )}
+                            </label>
+                        </div>
+                        <button>Log in</button>
+                    </form>
                 </div>
                 <div className="login-background">
                     <h1 className="title-primary">Read about everything.</h1>
