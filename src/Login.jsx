@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import './styles/login.css';
 
 export function Login() {
     const navigate = useNavigate();
@@ -29,21 +30,38 @@ export function Login() {
     }
 
     return (
-        <div className="login-background">
-            <div className="login-form-container">
-                <h1>Welcome</h1>
-                <form onSubmit={(e) => authenticate(e)}>
-                    <label>
-                        Email
-                        <input type="text" name="email" />
-                    </label>
-                    <label>
-                        Password
-                        <input type="password" name="password" />
-                    </label>
-                    <button>Log in</button>
-                </form>
+        <>
+            <div className="login-layout">
+                <div className="login-form-section">
+                    <div className="login-form-container flex-col">
+                        <form
+                            className="login-form flex-col"
+                            onSubmit={authenticate}
+                        >
+                            <h1 className="title-primary">Welcome</h1>
+                            <div className="fields-container flex-col">
+                                <label className="flex-col">
+                                    Email
+                                    <input
+                                        className="form-input"
+                                        type="text"
+                                </label>
+                                <label className="flex-col">
+                                    Password
+                                    <input
+                                        className="form-input"
+                                        type="password"
+                                    />
+                                </label>
+                            </div>
+                            <button>Log in</button>
+                        </form>
+                    </div>
+                </div>
+                <div className="login-background">
+                    <h1 className="title-primary">Read about everything.</h1>
+                </div>
             </div>
-        </div>
+        </>
     );
 }
