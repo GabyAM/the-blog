@@ -29,6 +29,9 @@ export function UserForm() {
                                 >
                                     <Link to="/signup">Sign up</Link>
                                 </li>
+                                <div
+                                    className={`tab-highlight ${location.pathname === '/signup' ? 'right' : ''}`}
+                                ></div>
                             </ul>
                         </nav>
                         <Outlet></Outlet>
