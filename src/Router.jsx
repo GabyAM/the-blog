@@ -4,6 +4,7 @@ import { Posts } from './Posts';
 import { Post } from './Post';
 import { UserForm } from './UserForm';
 import { LoginForm } from './LoginForm';
+import { SignupForm } from './SignupForm';
 
 export function Router() {
     const router = createBrowserRouter([
@@ -34,6 +35,10 @@ export function Router() {
                     path: '/login',
                     element: <LoginForm></LoginForm>
                 },
+                {
+                    path: '/signup',
+                    element: <SignupForm></SignupForm>
+                }
             ]
         }
     ]);
