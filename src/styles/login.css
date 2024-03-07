@@ -1,10 +1,10 @@
-.login-layout {
+.user-form-layout {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
     flex: 1;
 }
 
-.login-background {
+.user-form-background {
     flex: 1;
     position: relative;
     display: flex;
@@ -12,21 +12,27 @@
     align-items: center;
 }
 
-.login-background h1 {
+.user-form-background h1 {
     font-size: 64px;
     font-weight: 400;
     max-width: 400px;
     text-align: center;
 }
 
-.login-form-section {
+.user-form-section {
     background-color: var(--green-900);
     display: flex;
     justify-content: center;
-    align-items: center;
 }
 
-.login-form h1 {
+.user-form-container {
+    width: 100%;
+    max-width: 350px;
+    gap: var(--space-200);
+    padding: var(--space-500) 0;
+}
+
+.user-form-container h1 {
     font-size: 64px;
     font-weight: 400;
     color: white;
@@ -75,23 +81,22 @@
     outline: none;
 }
 
-.login-form {
-    padding: var(--space-500);
-    max-width: 400px;
+.user-form {
+    /* max-width: 400px; */
     width: 100%;
     margin: 0 auto;
 
-    gap: var(--space-600);
+    gap: var(--space-400);
     text-align: center;
 }
 
-.login-form label {
+.user-form label {
     color: white;
     gap: var(--space-100);
     text-align: left;
-    font-size: 20px;
+    font-size: 16px;
     display: grid;
-    grid-template-rows: auto auto 14px;
+    grid-template-rows: auto auto 16px;
 }
 
 .form-error {
@@ -102,10 +107,10 @@
 }
 
 .fields-container {
-    gap: var(--space-300);
+    gap: var(--space-200);
 }
 
-.login-form button {
+.user-form button {
     background-color: var(--green-100);
     color: var(--green-900);
     border: none;
