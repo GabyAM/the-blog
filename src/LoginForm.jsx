@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ErrorIcon } from './Icons';
+import { useState } from 'react';
 
 export function LoginForm() {
     const {
@@ -8,6 +9,7 @@ export function LoginForm() {
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const [serverErrors, setServerErrors] = useState(null);
     const navigate = useNavigate();
     async function onSubmit(formData) {
         const response = await fetch(
@@ -25,9 +27,30 @@ export function LoginForm() {
             if (!jsonResponse.errors) {
                 throw new Error('Something went wrong while fetching data');
             }
+            setServerErrors(jsonResponse.errors);
         } else {
+            setServerErrors(null);
             localStorage.setItem('jwt', jsonResponse.token);
             navigate('/posts');
+        }
+    }
+
+    function getFormErrors(clientErrors, serverErrors) {
+        const mappedClientErrors = {};
+        Object.keys(clientErrors).forEach((key) => {
+            mappedClientErrors[key] = clientErrors[key].message;
+        });
+        return Object.assign(mappedClientErrors, serverErrors);
+    }
+    const formErrors = getFormErrors(errors, serverErrors);
+
+    function handleInputChange(e) {
+        const { name } = e.target;
+
+        if (serverErrors[name]) {
+            const newErrors = { ...serverErrors };
+            delete newErrors[name];
+            setServerErrors(newErrors);
         }
     }
 
@@ -42,7 +65,7 @@ export function LoginForm() {
                         Email
                         <div
                             className={`form-input-container ${
-                                errors.email ? 'error' : ''
+                                formErrors.email ? 'error' : ''
                             }`}
                         >
                             <input
@@ -57,12 +80,13 @@ export function LoginForm() {
                                             'Email must be in the correct format'
                                     }
                                 })}
+                                onChange={handleInputChange}
                             />
                         </div>
-                        {errors.email && (
+                        {formErrors.email && (
                             <span className="form-error flex-row">
                                 <ErrorIcon width={16} height={16}></ErrorIcon>
-                                <span>{errors.email}</span>
+                                <span>{formErrors.email}</span>
                             </span>
                         )}
                     </label>
@@ -70,7 +94,7 @@ export function LoginForm() {
                         Password
                         <div
                             className={`form-input-container ${
-                                errors.password ? 'error' : ''
+                                formErrors.password ? 'error' : ''
                             }`}
                         >
                             <input
@@ -85,12 +109,13 @@ export function LoginForm() {
                                             'Password must have at least 8 characters'
                                     }
                                 })}
+                                onChange={handleInputChange}
                             />
                         </div>
-                        {errors.password && (
+                        {formErrors.password && (
                             <span className="form-error flex-row">
                                 <ErrorIcon width={16} height={16}></ErrorIcon>
-                                <span>{errors.password}</span>
+                                <span>{formErrors.password}</span>
                             </span>
                         )}
                     </label>
@@ -100,4 +125,3 @@ export function LoginForm() {
         </>
     );
 }
-
