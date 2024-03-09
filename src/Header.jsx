@@ -1,6 +1,9 @@
 import './styles/header.css';
+import { useAuth } from './hooks/useAuth';
 
 export function Header() {
+    const { token: currentUser, removeToken } = useAuth();
+
     return (
         <header className="flex-row">
             <div className="container flex-row">
@@ -16,8 +19,23 @@ export function Header() {
                     </li>
                 </ul>
                 <div className="user-section">
-                    <a href="/login">Login</a>
-                    <a href="/signup">Sign up</a>
+                    {currentUser ? (
+                        <>
+                            <span>{currentUser.name}</span>
+                            <button
+                                onClick={() => {
+                                    removeToken();
+                                }}
+                            >
+                                Log out
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <a href="/login">Login</a>
+                            <a href="/signup">Sign up</a>
+                        </>
+                    )}
                 </div>
             </div>
         </header>

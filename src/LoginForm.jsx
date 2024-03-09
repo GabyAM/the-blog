@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { ErrorIcon } from './Icons';
 import { useState } from 'react';
+import { useAuth } from './hooks/useAuth';
 
 export function LoginForm() {
     const {
@@ -9,19 +10,18 @@ export function LoginForm() {
         handleSubmit,
         formState: { errors }
     } = useForm();
+    const { updateToken } = useAuth();
     const [serverErrors, setServerErrors] = useState(null);
     const navigate = useNavigate();
     async function onSubmit(formData) {
-        const response = await fetch(
-            'https://odin-blog-api-beta.vercel.app/user/login',
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            }
-        );
+        const response = await fetch('http://localhost:3000/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData),
+            credentials: 'include'
+        });
         const jsonResponse = await response.json();
         if (!response.ok) {
             if (!jsonResponse.errors) {
@@ -30,7 +30,7 @@ export function LoginForm() {
             setServerErrors(jsonResponse.errors);
         } else {
             setServerErrors(null);
-            localStorage.setItem('jwt', jsonResponse.token);
+            updateToken(jsonResponse.accessToken);
             navigate('/posts');
         }
     }

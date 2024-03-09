@@ -1,8 +1,13 @@
-import { Outlet, Link, useLocation } from 'react-router-dom';
+import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
 import './styles/login.css';
+import { useAuth } from './hooks/useAuth';
 
 export function UserForm() {
     const location = useLocation();
+    const { token } = useAuth();
+    if (token) {
+        return <Navigate to="/posts"></Navigate>;
+    }
     return (
         <>
             <div className="user-form-layout">

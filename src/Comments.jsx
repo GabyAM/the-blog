@@ -4,6 +4,7 @@ import './styles/comments.css';
 import { SendComment } from './SendComment';
 import { useFetchData } from './hooks/useFetchData';
 import { CaretIcon } from './Icons';
+import { useAuth } from './hooks/useAuth';
 
 export function Comments({ postId }) {
     const {
@@ -18,6 +19,7 @@ export function Comments({ postId }) {
         `https://odin-blog-api-beta.vercel.app/post/${postId}/comments/count`
     );
     const [hidden, setHidden] = useState(true);
+    const { token } = useAuth();
 
     useEffect(() => {
         fetchCommentCount();
@@ -33,10 +35,12 @@ export function Comments({ postId }) {
         <div className="comment-section flex-col">
             {commentCount ? (
                 <>
-                    <SendComment
-                        postId={postId}
-                        onSubmit={fetchComments}
-                    ></SendComment>
+                    {token && (
+                        <SendComment
+                            postId={postId}
+                            onSubmit={fetchComments}
+                        ></SendComment>
+                    )}
                     <div>
                         <button
                             className="toggle-comments"
