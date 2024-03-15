@@ -4,18 +4,34 @@ import { PostCard } from './PostCard';
 import './styles/posts.css';
 import { useFetchData } from './hooks/useFetchData';
 import { PostCardSkeleton } from './PostCardSkeleton';
+import { usePagination } from './hooks/usePagination';
 
 export function Posts() {
     const {
-        data: posts,
+        results: posts,
         loading,
         error,
-        fetchData: fetchPosts
-    } = useFetchData('https://odin-blog-api-beta.vercel.app/published_posts');
+        fetchNextPage,
+        loadingNextPage,
+        nextPageError
+    } = usePagination('https://odin-blog-api-beta.vercel.app/published_posts');
 
     useEffect(() => {
-        fetchPosts();
-    }, [fetchPosts]);
+        function handleScroll() {
+            if (
+                window.innerHeight + window.scrollY + 1 >=
+                document.body.offsetHeight
+            ) {
+                fetchNextPage();
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [fetchNextPage]);
+
     return (
         <>
             <Header></Header>
@@ -29,16 +45,21 @@ export function Posts() {
                             <PostCardSkeleton></PostCardSkeleton>
                         </>
                     ) : (
-                        posts.map((post) => (
-                            <PostCard
-                                key={post.id}
-                                id={post._id}
-                                title={post.title}
-                                author={post.author}
-                                summary={post.summary}
-                                commentCount={post.comment_count}
-                            ></PostCard>
-                        ))
+                        <>
+                            {posts.map((post) => (
+                                <PostCard
+                                    key={post._id}
+                                    id={post._id}
+                                    title={post.title}
+                                    author={post.author}
+                                    summary={post.summary}
+                                    commentCount={post.comment_count}
+                                ></PostCard>
+                            ))}
+                            {loadingNextPage && (
+                                <PostCardSkeleton></PostCardSkeleton>
+                            )}
+                        </>
                     )}
                 </div>
             </div>
