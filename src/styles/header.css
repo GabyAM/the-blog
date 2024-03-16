@@ -3,6 +3,14 @@ header {
     border: none;
     border-bottom: 1px solid var(--main-grey);
 }
+
+header.sticky {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
 header .container {
     justify-content: space-between;
     align-items: center;

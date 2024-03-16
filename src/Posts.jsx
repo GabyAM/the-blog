@@ -34,7 +34,7 @@ export function Posts() {
 
     return (
         <>
-            <Header></Header>
+            <Header sticky={true}></Header>
             <div className="posts container">
                 <div className="search-bar"></div>
                 <div className="posts flex-col">

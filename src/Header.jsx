@@ -1,11 +1,11 @@
 import './styles/header.css';
 import { useAuth } from './hooks/useAuth';
 
-export function Header() {
+export function Header({ sticky }) {
     const { token: currentUser, removeToken } = useAuth();
 
     return (
-        <header className="flex-row">
+        <header className={`flex-row ${sticky ? 'sticky' : ''}`}>
             <div className="container flex-row">
                 <div className="logo flex-row">
                     <img src="/logo_alternative.png"></img>
