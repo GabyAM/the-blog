@@ -2,46 +2,48 @@ import { useEffect, useState } from 'react';
 import { Comment } from './Comment';
 import './styles/comments.css';
 import { SendComment } from './SendComment';
-import { useFetchData } from './hooks/useFetchData';
 import { CaretIcon } from './Icons';
 import { useAuth } from './hooks/useAuth';
+import { usePagination } from './hooks/usePagination';
 
 export function Comments({ postId }) {
     const {
-        data: comments,
+        results: comments,
+        count,
         loading,
         error,
-        fetchData: fetchComments
-    } = useFetchData(
-        `https://odin-blog-api-beta.vercel.app/post/${postId}/comments`
-    );
-    const { data: commentCount, fetchData: fetchCommentCount } = useFetchData(
-        `https://odin-blog-api-beta.vercel.app/post/${postId}/comments/count`
-    );
+        fetchNextPage,
+        loadingNextPage,
+        nextPageError
+    } = usePagination(`http://localhost:3000/post/${postId}/comments`);
     const [hidden, setHidden] = useState(true);
     const { token } = useAuth();
 
     useEffect(() => {
-        fetchCommentCount();
-    }, [fetchCommentCount, comments]);
-
-    useEffect(() => {
-        if (!hidden) {
-            fetchComments();
+        function handleScroll() {
+            if (
+                !hidden &&
+                window.innerHeight + window.scrollY + 1 >=
+                    document.body.offsetHeight
+            ) {
+                if (!loadingNextPage) {
+                    fetchNextPage();
+                }
+            }
         }
-    }, [hidden, fetchComments]);
+        window.addEventListener('scroll', handleScroll);
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [fetchNextPage, loadingNextPage, hidden]);
 
     return (
         <div className="comment-section flex-col">
-            {commentCount ? (
-                <>
-                    {token && (
-                        <SendComment
-                            postId={postId}
-                            onSubmit={fetchComments}
-                        ></SendComment>
-                    )}
-                    <div>
+            {token && (
+                <SendComment
+                    postId={postId}
+                ></SendComment>
+            )}
                         <button
                             className="toggle-comments"
                             onClick={() => setHidden(!hidden)}
@@ -53,7 +55,7 @@ export function Comments({ postId }) {
                             ></CaretIcon>
                             <span>
                                 {hidden
-                                    ? `Show comments (${commentCount.count})`
+                                    ? `Show comments (${count})`
                                     : 'Hide comments'}
                             </span>
                         </button>
