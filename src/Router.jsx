@@ -18,14 +18,7 @@ export function Router() {
         },
         {
             path: '/post/:id',
-            element: <Post></Post>,
-            loader: async ({ request, params }) => {
-                const data = await fetch(
-                    `https://odin-blog-api-beta.vercel.app/post/${params.id}`
-                );
-                const post = await data.json();
-                return post;
-            }
+            element: <Post></Post>
         },
         {
             path: '/',
