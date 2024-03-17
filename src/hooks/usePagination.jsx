@@ -14,7 +14,8 @@ export function usePagination(url) {
     const [loading, setLoading] = useState(true);
     const [loadingNextPage, setLoadingNextPage] = useState(false);
     const [nextPageError, setNextPageError] = useState(null);
-    const [metadata, setMetadata] = useState(null);
+    const [nextPageParams, setNextPageParams] = useState(null);
+    const [count, setCount] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -26,7 +27,8 @@ export function usePagination(url) {
                 }
                 const data = await response.json();
                 setResults(data.results);
-                setMetadata(data.metadata);
+                setNextPageParams(data.metadata.nextPageParams);
+                setCount(data.metadata.count);
             } catch (e) {
                 setError(e);
                 setResults([]);
@@ -38,7 +40,6 @@ export function usePagination(url) {
     }, [url]);
 
     async function fetchNextPage() {
-        const { nextPageParams } = metadata;
         if (!nextPageParams) {
             return;
         }
@@ -53,7 +54,7 @@ export function usePagination(url) {
             }
             const data = await response.json();
             setResults((prev) => [...prev, ...data.results]);
-            setMetadata(data.metadata);
+            setNextPageParams(data.metadata.nextPageParams);
         } catch (e) {
             setNextPageError(e);
             setResults([]);
@@ -64,7 +65,7 @@ export function usePagination(url) {
 
     return {
         results,
-        count: metadata?.count || 0,
+        count,
         loading,
         error,
         fetchNextPage,
