@@ -1,23 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 
+const options = {
+    method: 'GET',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    credentials: 'include'
+};
+
 export function usePagination(url) {
     const [results, setResults] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
     const [loadingNextPage, setLoadingNextPage] = useState(false);
     const [nextPageError, setNextPageError] = useState(null);
-    const [nextPageParams, setNextPageParams] = useState(null);
+    const [metadata, setMetadata] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
-            const options = {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                credentials: 'include'
-            };
-
             setLoading(true);
             try {
                 const response = await fetch(url, options);
@@ -26,7 +26,7 @@ export function usePagination(url) {
                 }
                 const data = await response.json();
                 setResults(data.results);
-                setNextPageParams(data.metadata.nextPageParams);
+                setMetadata(data.metadata);
             } catch (e) {
                 setError(e);
                 setResults([]);
@@ -38,16 +38,10 @@ export function usePagination(url) {
     }, [url]);
 
     async function fetchNextPage() {
+        const { nextPageParams } = metadata;
         if (!nextPageParams) {
             return;
         }
-        const options = {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include'
-        };
         setLoadingNextPage(true);
         try {
             const response = await fetch(
@@ -59,7 +53,7 @@ export function usePagination(url) {
             }
             const data = await response.json();
             setResults((prev) => [...prev, ...data.results]);
-            setNextPageParams(data.metadata.nextPageParams);
+            setMetadata(data.metadata);
         } catch (e) {
             setNextPageError(e);
             setResults([]);
@@ -70,6 +64,7 @@ export function usePagination(url) {
 
     return {
         results,
+        count: metadata?.count || 0,
         loading,
         error,
         fetchNextPage,
