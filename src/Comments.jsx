@@ -5,6 +5,7 @@ import { SendComment } from './SendComment';
 import { CaretIcon } from './Icons';
 import { useAuth } from './hooks/useAuth';
 import { usePagination } from './hooks/usePagination';
+import { CommentSkeleton } from './CommentSkeleton';
 
 export function Comments({ postId }) {
     const {
@@ -44,6 +45,15 @@ export function Comments({ postId }) {
                     postId={postId}
                 ></SendComment>
             )}
+            <div>
+                {loading ? (
+                    <>
+                        <CommentSkeleton></CommentSkeleton>
+                        <CommentSkeleton></CommentSkeleton>
+                        <CommentSkeleton></CommentSkeleton>
+                    </>
+                ) : (
+                    <>
                         <button
                             className="toggle-comments"
                             onClick={() => setHidden(!hidden)}
@@ -59,31 +69,30 @@ export function Comments({ postId }) {
                                     : 'Hide comments'}
                             </span>
                         </button>
-                        {!hidden &&
-                            (loading ? (
-                                <span>Loading comments...</span>
-                            ) : error ? (
-                                <span>{error}</span>
-                            ) : (
-                                <div className="comments flex-col">
-                                    {comments.map((comment) => {
-                                        return (
-                                            <>
-                                                <Comment
-                                                    key={comment._id}
-                                                    comment={comment}
-                                                ></Comment>
-                                                <div className="horizontal-separator"></div>
-                                            </>
-                                        );
-                                    })}
-                                </div>
-                            ))}
-                    </div>
-                </>
-            ) : (
-                <span>{"There's no comments yet"}</span>
-            )}
+                        {!hidden && (
+                            <div className="comments flex-col">
+                                {comments.map((comment) => {
+                                    return (
+                                        <div
+                                            className="flex-col"
+                                            key={comment._id}
+                                        >
+                                            <Comment
+                                                key={comment._id}
+                                                comment={comment}
+                                            ></Comment>
+                                            <div className="horizontal-separator"></div>
+                                        </div>
+                                    );
+                                })}
+                                {loadingNextPage && (
+                                    <CommentSkeleton></CommentSkeleton>
+                                )}
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
         </div>
     );
 }
