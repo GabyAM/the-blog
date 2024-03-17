@@ -22,15 +22,16 @@ export function Posts() {
                 window.innerHeight + window.scrollY + 1 >=
                 document.body.offsetHeight
             ) {
-                fetchNextPage();
+                if (!loadingNextPage) {
+                    fetchNextPage();
+                }
             }
         }
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [fetchNextPage]);
+    }, [fetchNextPage, loadingNextPage]);
 
     return (
         <>
