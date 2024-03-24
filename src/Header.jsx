@@ -5,8 +5,8 @@ export function Header({ sticky }) {
     const { token: currentUser, removeToken } = useAuth();
 
     return (
-        <header className={`flex-row ${sticky ? 'sticky' : ''}`}>
-            <div className="container flex-row">
+        <header className={sticky ? 'sticky' : ''}>
+            <div className="container">
                 <div className="logo flex-row">
                     <img src="/logo_alternative.png"></img>
                 </div>
@@ -18,11 +18,29 @@ export function Header({ sticky }) {
                         <a href="/posts">Posts</a>
                     </li>
                 </ul>
-                <div className="user-section">
+                <div
+                    className={`user-section ${currentUser ? 'logged-in' : ''}`}
+                >
                     {currentUser ? (
                         <>
-                            <span>{currentUser.name}</span>
+                            <div className="header-user-card">
+                                <div className="image-container">
+                                    <img
+                                        src={
+                                            currentUser.image ===
+                                            '/images/profile.png'
+                                                ? '/profile.png'
+                                                : `http://localhost:3000${currentUser.image}`
+                                        }
+                                    ></img>
+                                </div>
+                                <div className="info-container flex-col">
+                                    <span>{currentUser.name}</span>
+                                    <span>{currentUser.email}</span>
+                                </div>
+                            </div>
                             <button
+                                className="logout-button"
                                 onClick={() => {
                                     removeToken();
                                 }}

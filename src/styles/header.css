@@ -12,11 +12,18 @@ header.sticky {
 }
 
 header .container {
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
     padding: var(--space-200) var(--space-500);
     max-width: 2000px;
     width: 100%;
+}
+
+header .container > * {
+    max-height: 100%;
+    flex: 1;
+    justify-content: center;
 }
 
 header .logo {
@@ -42,14 +49,20 @@ header .logo {
 
 .user-section {
     display: grid;
-    grid-template-columns: 1fr 1fr;
     gap: var(--space-500);
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    justify-self: right;
+}
+.user-section:not(.logged-in) {
+    max-width: 200px;
 }
 
 .user-section a {
     padding: 0.25em 0.8em;
     text-align: center;
     border-radius: 100vw;
+    white-space: nowrap;
 }
 
 .user-section a:first-of-type {
@@ -60,4 +73,47 @@ header .logo {
 .user-section a:last-of-type {
     background-color: var(--green-300);
     color: white;
+}
+
+.user-section.logged-in {
+    grid-template-columns: auto min-content;
+}
+
+.header-user-card {
+    display: flex;
+    flex-direction: row;
+    max-height: 100%;
+    gap: var(--space-200);
+    align-items: center;
+}
+
+.header-user-card .image-container {
+    width: var(--space-500);
+    height: var(--space-500);
+}
+
+.header-user-card .image-container img {
+    border-radius: var(--space-200);
+}
+
+.header-user-card .info-container {
+    max-width: 200px;
+}
+
+.info-container span {
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.logout-button {
+    border: 1px solid var(--green-900);
+    border-radius: 100vh;
+    color: var(--green-900);
+    background: none;
+    height: fit-content;
+    white-space: nowrap;
+    padding: 0.25em 0.8em;
+    font-size: 16px;
 }
