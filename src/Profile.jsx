@@ -27,6 +27,9 @@ export function Profile() {
             <Header></Header>
             <div className="container profile-container">
                 <div className="flex-col grey-card">
+                    {loading ? (
+                        <ProfileCardSkeleton></ProfileCardSkeleton>
+                    ) : (
                         <div className="profile-card flex-row">
                             <>
                                 <div className="image-container">
@@ -48,6 +51,7 @@ export function Profile() {
                                 </div>
                             </>
                         </div>
+                    )}
                 </div>
             </div>
         </>
