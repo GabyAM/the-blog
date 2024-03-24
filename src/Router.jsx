@@ -5,6 +5,7 @@ import { Post } from './Post';
 import { UserForm } from './UserForm';
 import { LoginForm } from './LoginForm';
 import { SignupForm } from './SignupForm';
+import { Profile } from './Profile';
 
 export function Router() {
     const router = createBrowserRouter([
@@ -33,6 +34,10 @@ export function Router() {
                     element: <SignupForm></SignupForm>
                 }
             ]
+        },
+        {
+            path: '/user/:id',
+            element: <Profile></Profile>
         }
     ]);
 
