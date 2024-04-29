@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const options = {
     method: 'GET',
@@ -7,8 +7,7 @@ const options = {
     },
     credentials: 'include'
 };
-
-export function usePagination(url) {
+export function usePagination(url, limit = 10) {
     const [results, setResults] = useState([]);
     const [error, setError] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -21,7 +20,10 @@ export function usePagination(url) {
         async function fetchData() {
             setLoading(true);
             try {
-                const response = await fetch(url, options);
+                const response = await fetch(
+                    `${url}${url.includes('?') ? '&' : '?'}limit=${limit}`,
+                    options
+                );
                 if (!response.ok) {
                     throw new Error('data fetch failed');
                 }
@@ -37,7 +39,7 @@ export function usePagination(url) {
             }
         }
         fetchData();
-    }, [url]);
+    }, [url, limit]);
 
     async function fetchNextPage() {
         if (!nextPageParams) {
@@ -46,7 +48,7 @@ export function usePagination(url) {
         setLoadingNextPage(true);
         try {
             const response = await fetch(
-                `${url}?lastId=${nextPageParams['_id']}&lastCreatedAt=${nextPageParams.createdAt}`,
+                `${url}${url.includes('?') ? '&' : '?'}lastId=${nextPageParams._id}&lastCreatedAt=${nextPageParams.createdAt}&limit=${limit}`,
                 options
             );
             if (!response.ok) {
@@ -65,10 +67,12 @@ export function usePagination(url) {
 
     return {
         results,
+        setResults,
         count,
         loading,
         error,
         fetchNextPage,
+        hasNextPage: nextPageParams !== null,
         loadingNextPage,
         nextPageError
     };
