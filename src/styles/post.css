@@ -3,8 +3,15 @@
 }
 
 .post {
-    padding: var(--space-400) var(--space-900) var(--space-500);
+    padding: var(--space-400) 0 var(--space-500);
     gap: var(--space-600);
+    max-width: 650px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.post .headings {
+    gap: var(--space-200);
 }
 .post h1 {
     color: var(--green-900);
@@ -15,8 +22,17 @@
     font-size: 20px;
 }
 
+.post .image-container {
+    width: 100%;
+    aspect-ratio: 1.9/1;
+}
+
 .horizontal-separator {
     background-color: var(--main-grey);
     width: 100%;
     height: 1px;
+}
+
+.post-container + .horizontal-separator {
+    margin: var(--space-400) 0;
 }

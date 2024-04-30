@@ -5,6 +5,7 @@ import { Comments } from './Comments';
 import { useFetchData } from './hooks/useFetchData';
 import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import { PostSkeleton } from './PostSkeleton';
 
 export function Post(props) {
     const { id } = useParams();
@@ -25,24 +26,33 @@ export function Post(props) {
                 <>
                     <h1> Oops</h1>
                     <p>
-                        {' '}
                         {
                             "Couldn't find the resource or doesn't exist (error screen to be implemented)"
                         }
                     </p>
                 </>
+            ) : loading ? (
+                <PostSkeleton></PostSkeleton>
             ) : (
                 <>
                     <div className="container post-container flex-col">
                         <div className="post flex-col">
-                            <h1 className="title-primary">
-                                {(post && post.title) || <Skeleton count={2} />}
-                            </h1>
-                            <p>
-                                {(post && post.text) || (
-                                    <Skeleton count={10}></Skeleton>
-                                )}
-                            </p>
+                            <div className="headings flex-col">
+                                <h1 className="title-primary">{post.title}</h1>
+                                <p> {post.summary}</p>
+                            </div>
+
+                            <div className="image-container">
+                                <img
+                                    src={`http://localhost:3000${post.image}`}
+                                ></img>
+                            </div>
+
+                            <div
+                                dangerouslySetInnerHTML={{
+                                    __html: post.text
+                                }}
+                            ></div>
                         </div>
                     </div>
                     <div className="horizontal-separator"></div>
