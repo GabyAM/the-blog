@@ -1,44 +1,31 @@
+import { Link } from 'react-router-dom';
 import { SendIcon } from './Icons';
 import './styles/sendcomment.css';
 
-export function SendComment({ postId, onSubmit }) {
-    async function commentSubmitHandler(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const text = formData.get('comment-text');
-
-        const token = localStorage.getItem('jwt');
-        if (!token) {
-            throw new Error('');
-        }
-        const res = await fetch(
-            `https://odin-blog-api-beta.vercel.app/post/${postId}/comments`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `bearer ${token}`
-                },
-                body: JSON.stringify({ text })
-            }
-        );
-        if (!res.ok) {
-            throw new Error('Error sending comment');
-        }
-        onSubmit();
-    }
+export function SendComment({ postId, onSubmit, disabled, pending }) {
     return (
-        <div className="comment-form-container">
+        <div
+            className={`comment-form-container ${disabled || pending ? 'disabled' : ''}`}
+        >
             <span>Add a comment</span>
             <form
                 className="comment-form flex-row"
-                onSubmit={commentSubmitHandler}
+                onSubmit={(e) => {
+                    if (disabled || pending) return;
+                    onSubmit(e);
+                    e.target.reset();
+                }}
             >
                 <textarea name="comment-text" rows={3}></textarea>
                 <button className="flex-row">
                     <SendIcon width={32} height={32}></SendIcon>
                 </button>
             </form>
+            {disabled && (
+                <h3>
+                    <Link to="/login">Log in</Link> to send a message
+                </h3>
+            )}
         </div>
     );
 }

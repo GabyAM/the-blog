@@ -6,10 +6,12 @@ import { CaretIcon } from './Icons';
 import { useAuth } from './hooks/useAuth';
 import { usePagination } from './hooks/usePagination';
 import { CommentSkeleton } from './CommentSkeleton';
+import toast from 'react-hot-toast';
 
 export function Comments({ postId }) {
     const {
         results: comments,
+        setResults: setComments,
         count,
         loading,
         error,
@@ -18,8 +20,8 @@ export function Comments({ postId }) {
         nextPageError
     } = usePagination(`http://localhost:3000/post/${postId}/comments`);
     const [hidden, setHidden] = useState(true);
-    const { token } = useAuth();
-
+    const { token, encodedToken } = useAuth();
+    const [isSending, setIsSending] = useState(false);
     useEffect(() => {
         function handleScroll() {
             if (
@@ -38,11 +40,49 @@ export function Comments({ postId }) {
         };
     }, [fetchNextPage, loadingNextPage, hidden]);
 
+    function handleCommentSubmit(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const text = formData.get('comment-text');
+        setIsSending(true);
+        const promise = fetch(`http://localhost:3000/post/${postId}/comments`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `bearer ${encodedToken}`
+            },
+            body: JSON.stringify({ text })
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('');
+                }
+                return res.json();
+            })
+            .then((data) => {
+                const comment = data.comment;
+                setComments((prevComments) => [comment, ...prevComments]);
+            })
+            .catch((e) => {
+                throw new Error("Couldn't submit comment");
+            })
+            .finally(() => setIsSending(false));
+
+        toast.promise(promise, {
+            loading: 'Submitting comment...',
+            success: 'Comment submitted',
+            error: (error) => error.message
+        });
+    }
     return (
         <div className="comment-section flex-col">
-            {token && (
+            {!loading && (
                 <SendComment
+                    disabled={token === null}
+                    pending={isSending}
                     postId={postId}
+                    onSubmit={handleCommentSubmit}
                 ></SendComment>
             )}
             <div>
