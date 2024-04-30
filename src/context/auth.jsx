@@ -19,15 +19,22 @@ async function getDecodedToken(token) {
 
 export function AuthProvider({ children }) {
     const [token, setToken] = useState(null);
+    const [encodedToken, setEncodedToken] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     async function updateToken(newToken) {
         localStorage.setItem('jwt', newToken);
-        setToken(await getDecodedToken(newToken));
+        const decodedToken = await getDecodedToken(newToken);
+        setToken(decodedToken);
+        if (decodedToken) {
+            setEncodedToken(newToken);
+        }
     }
 
     function removeToken() {
         localStorage.removeItem('jwt');
         setToken(null);
+        setEncodedToken(null);
     }
 
     const refresh = useCallback(async () => {
@@ -48,6 +55,8 @@ export function AuthProvider({ children }) {
             updateToken(newToken);
         } catch (e) {
             removeToken();
+        } finally {
+            setLoading(false);
         }
     }, []);
 
@@ -56,6 +65,14 @@ export function AuthProvider({ children }) {
             const initialToken = localStorage.getItem('jwt');
             const decodedToken = await getDecodedToken(initialToken);
             setToken(decodedToken);
+            if (decodedToken) {
+                setEncodedToken(initialToken);
+                if (decodedToken.exp * 1000 - Date.now() > 0) {
+                    setLoading(false);
+                }
+            } else {
+                setLoading(false);
+            }
         }
         handleTokenChange();
     }, []);
@@ -77,10 +94,12 @@ export function AuthProvider({ children }) {
     const contextValue = useMemo(
         () => ({
             token,
+            encodedToken,
+            loading,
             updateToken,
             removeToken
         }),
-        [token]
+        [token, loading, encodedToken]
     );
 
     return (
