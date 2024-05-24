@@ -83,7 +83,7 @@ export function Profile() {
                                                 onClick={() =>
                                                     setIsEditing(true)
                                                 }
-                                                className="profile-edit-button"
+                                                className="secondary-button rounded medium profile-edit-button flex-row"
                                             >
                                                 <EditIcon></EditIcon>
                                                 <span>Edit</span>

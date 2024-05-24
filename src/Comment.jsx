@@ -88,7 +88,7 @@ export function Comment({ comment }) {
                         <div className="replies-actions flex-row">
                             {token && (
                                 <button
-                                    className="action-button reply-button flex-row"
+                                    className="secondary-button smaller rounded action-button flex-row"
                                     onClick={() => setIsReplying(!isReplying)}
                                 >
                                     <ReplyIcon
@@ -100,7 +100,7 @@ export function Comment({ comment }) {
                             )}
                             {hasMoreReplies && (
                                 <Link
-                                    className="action-button goto-replies-button flex-row"
+                                    className="outlined-button-400 light-outline rounded smaller action-button flex-row"
                                     to={`/comment/${comment._id}`}
                                 >
                                     <RepliesIcon

@@ -19,23 +19,6 @@
 .comment-form .comment-form-actions {
     gap: var(--space-300);
 }
-.comment-form-actions button {
-    width: fit-content;
-    padding: 0.1em 1.5em;
-    font-size: 20px;
-    border-radius: var(--space-100);
-    border: none;
-    font-weight: 600;
-}
-
-.comment-form-actions .cancel-button {
-    background-color: var(--main-grey);
-    color: var(--green-900);
-}
-.comment-form-actions .send-button {
-    background-color: var(--green-900);
-    color: white;
-}
 
 .comment-form .textarea-container {
     position: relative;

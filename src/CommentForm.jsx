@@ -57,13 +57,15 @@ export function CommentForm({ onSubmit, disabled, isOnComment, onClose }) {
                 <div className="comment-form-actions flex-row">
                     {isOnComment && (
                         <button
-                            className="cancel-button"
+                            className="tertiary-button semi-rounded medium"
                             onClick={() => onClose()}
                         >
                             Cancel
                         </button>
                     )}
-                    <button className="send-button">Send</button>
+                    <button className="primary-button semi-rounded medium">
+                        Send
+                    </button>
                 </div>
             </form>
         </>
