@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Comment } from './Comment';
 import './styles/comments.css';
-import { SendComment } from './SendComment';
+import { CommentForm } from './CommentForm';
 import { CaretIcon } from './Icons';
 import { useAuth } from './hooks/useAuth';
 import { usePagination } from './hooks/usePagination';
 import { CommentSkeleton } from './CommentSkeleton';
 import toast from 'react-hot-toast';
+import { CommentTreeProvider } from './context/commentTree';
+import { addReply } from './utilities/comment';
 
 export function Comments({ postId }) {
     const {
@@ -20,8 +22,7 @@ export function Comments({ postId }) {
         nextPageError
     } = usePagination(`http://localhost:3000/post/${postId}/comments`);
     const [hidden, setHidden] = useState(true);
-    const { token, encodedToken } = useAuth();
-    const [isSending, setIsSending] = useState(false);
+    const { token: currentUser, encodedToken } = useAuth();
     useEffect(() => {
         function handleScroll() {
             if (
@@ -40,19 +41,19 @@ export function Comments({ postId }) {
         };
     }, [fetchNextPage, loadingNextPage, hidden]);
 
-    function handleCommentSubmit(e) {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const text = formData.get('comment-text');
-        setIsSending(true);
-        const promise = fetch(`http://localhost:3000/post/${postId}/comments`, {
+    function handleCommentSubmit(formData, parentCommentId) {
+        const url = parentCommentId
+            ? `comment/${parentCommentId}/comments`
+            : `post/${postId}/comments`;
+
+        return fetch(`http://localhost:3000/${url}`, {
             method: 'POST',
             credentials: 'include',
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: `bearer ${encodedToken}`
             },
-            body: JSON.stringify({ text })
+            body: JSON.stringify(formData)
         })
             .then((res) => {
                 if (!res.ok) {
@@ -61,29 +62,40 @@ export function Comments({ postId }) {
                 return res.json();
             })
             .then((data) => {
-                const comment = data.comment;
-                setComments((prevComments) => [comment, ...prevComments]);
+                const newComment = data.comment;
+                const { id, ...rest } = currentUser;
+                const newUser = { _id: id, ...rest };
+                newComment.user = newUser;
+                if (parentCommentId) {
+                    setComments((prevComments) =>
+                        addReply(prevComments, parentCommentId, newComment)
+                    );
+                } else {
+                    setComments((prevComments) => [
+                        newComment,
+                        ...prevComments
+                    ]);
+                }
             })
             .catch((e) => {
                 throw new Error("Couldn't submit comment");
-            })
-            .finally(() => setIsSending(false));
-
-        toast.promise(promise, {
-            loading: 'Submitting comment...',
-            success: 'Comment submitted',
-            error: (error) => error.message
-        });
+            });
     }
     return (
         <div className="comment-section flex-col">
             {!loading && (
-                <SendComment
-                    disabled={token === null}
-                    pending={isSending}
-                    postId={postId}
-                    onSubmit={handleCommentSubmit}
-                ></SendComment>
+                <div>
+                    <h2
+                        className={`main-comment-form-title ${encodedToken === null ? 'disabled' : ''}`}
+                    >
+                        Add a comment
+                    </h2>
+                    <CommentForm
+                        disabled={encodedToken === null}
+                        postId={postId}
+                        onSubmit={handleCommentSubmit}
+                    ></CommentForm>
+                </div>
             )}
             <div>
                 {loading ? (
@@ -111,20 +123,24 @@ export function Comments({ postId }) {
                         </button>
                         {!hidden && (
                             <div className="comments flex-col">
-                                {comments.map((comment) => {
-                                    return (
-                                        <div
-                                            className="flex-col"
-                                            key={comment._id}
-                                        >
-                                            <Comment
+                                <CommentTreeProvider
+                                    submitReply={handleCommentSubmit}
+                                >
+                                    {comments.map((comment) => {
+                                        return (
+                                            <div
+                                                className="flex-col"
                                                 key={comment._id}
-                                                comment={comment}
-                                            ></Comment>
-                                            <div className="horizontal-separator"></div>
-                                        </div>
-                                    );
-                                })}
+                                            >
+                                                <Comment
+                                                    key={comment._id}
+                                                    comment={comment}
+                                                ></Comment>
+                                                <div className="horizontal-separator"></div>
+                                            </div>
+                                        );
+                                    })}
+                                </CommentTreeProvider>
                                 {loadingNextPage && (
                                     <CommentSkeleton></CommentSkeleton>
                                 )}
