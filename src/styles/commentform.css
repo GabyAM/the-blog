@@ -1,0 +1,78 @@
+.comment-form {
+    aspect-ratio: 5/1;
+    max-width: 65%;
+    gap: var(--space-300);
+    position: relative;
+}
+
+.comment-form.disabled::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.comment-form .comment-form-actions {
+    gap: var(--space-300);
+}
+.comment-form-actions button {
+    width: fit-content;
+    padding: 0.1em 1.5em;
+    font-size: 20px;
+    border-radius: var(--space-100);
+    border: none;
+    font-weight: 600;
+}
+
+.comment-form-actions .cancel-button {
+    background-color: var(--main-grey);
+    color: var(--green-900);
+}
+.comment-form-actions .send-button {
+    background-color: var(--green-900);
+    color: white;
+}
+
+.comment-form .textarea-container {
+    position: relative;
+    height: fit-content;
+}
+.comment-form textarea {
+    display: block;
+    background: none;
+    resize: none;
+    font-family: 'Poppins';
+    scrollbar-width: thin;
+    border-radius: var(--space-300);
+    border: 1px solid var(--dark-grey);
+    width: 100%;
+    padding: var(--space-100);
+}
+
+.comment-form.disabled {
+    pointer-events: none;
+}
+
+.login-message {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: fit-content;
+    height: fit-content;
+    font-size: 20px;
+    font-weight: 500;
+    z-index: 3;
+    pointer-events: all;
+}
+
+.login-message a {
+    color: var(--green-500);
+    font-weight: 700;
+}
