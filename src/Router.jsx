@@ -6,6 +6,7 @@ import { UserForm } from './UserForm';
 import { LoginForm } from './LoginForm';
 import { SignupForm } from './SignupForm';
 import { Profile } from './Profile';
+import { CommentDetail } from './CommentDetail';
 
 export function Router() {
     const router = createBrowserRouter([
@@ -38,6 +39,10 @@ export function Router() {
         {
             path: '/user/:id',
             element: <Profile></Profile>
+        },
+        {
+            path: '/comment/:id',
+            element: <CommentDetail></CommentDetail>
         }
     ]);
 
