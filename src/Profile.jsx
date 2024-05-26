@@ -8,6 +8,7 @@ import { ProfileCardSkeleton } from './ProfileCardSkeleton';
 import { useAuth } from './hooks/useAuth';
 import { ProfileForm } from './ProfileForm';
 import toast from 'react-hot-toast';
+import { SavedPosts } from './SavedPosts';
 
 export function Profile() {
     const { id } = useParams();
@@ -19,13 +20,19 @@ export function Profile() {
         fetchData: fetchUser
     } = useFetchData(`http://localhost:3000/user/${id}`);
 
+    const [savedPosts, setSavedPosts] = useState([]);
+
     const { token: currentUser, encodedToken } = useAuth();
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         fetchUser();
     }, [fetchUser]);
-
+    useEffect(() => {
+        if (user && user.saved_posts) {
+            setSavedPosts(user.saved_posts);
+        }
+    }, [user]);
     function handleEditUser(formData) {
         const promise = fetch(`http://localhost:3000/user/${id}/update`, {
             method: 'POST',
@@ -51,6 +58,8 @@ export function Profile() {
             error: (e) => e.message
         });
     }
+
+    const isOwnProfile = currentUser ? currentUser.id === id : undefined;
 
     return (
         <>
@@ -78,7 +87,7 @@ export function Profile() {
                                         <span className="user-email">
                                             {user.email}
                                         </span>
-                                        {currentUser.id === user._id && (
+                                        {isOwnProfile && (
                                             <button
                                                 onClick={() =>
                                                     setIsEditing(true)
@@ -91,12 +100,16 @@ export function Profile() {
                                         )}
                                     </div>
                                 </div>
-                                <div className="horizontal-separator"></div>
-                                <div>
-                                    <h2 className="title-primary">
-                                        Saved posts
-                                    </h2>
-                                </div>
+                                {isOwnProfile && (
+                                    <>
+                                        <div className="horizontal-separator"></div>
+                                        <SavedPosts
+                                            posts={savedPosts}
+                                            setPosts={setSavedPosts}
+                                            token={encodedToken}
+                                        ></SavedPosts>
+                                    </>
+                                )}
                             </>
                         )}
                     </div>
