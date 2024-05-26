@@ -10,11 +10,10 @@ import toast from 'react-hot-toast';
 import { CommentTreeProvider } from './context/commentTree';
 import { addReply } from './utilities/comment';
 
-export function Comments({ postId }) {
+export function Comments({ postId, count }) {
     const {
         results: comments,
         setResults: setComments,
-        count,
         loading,
         error,
         fetchNextPage,
@@ -23,6 +22,7 @@ export function Comments({ postId }) {
     } = usePagination(`http://localhost:3000/post/${postId}/comments`);
     const [hidden, setHidden] = useState(true);
     const { token: currentUser, encodedToken } = useAuth();
+    const [commentCount, setCommentCount] = useState(count);
     useEffect(() => {
         function handleScroll() {
             if (
@@ -76,11 +76,13 @@ export function Comments({ postId }) {
                         ...prevComments
                     ]);
                 }
+                setCommentCount((prev) => prev + 1);
             })
             .catch((e) => {
                 throw new Error("Couldn't submit comment");
             });
     }
+
     return (
         <div className="comment-section flex-col">
             {!loading && (
@@ -117,7 +119,7 @@ export function Comments({ postId }) {
                             ></CaretIcon>
                             <span>
                                 {hidden
-                                    ? `Show comments (${count})`
+                                    ? `Show comments (${commentCount})`
                                     : 'Hide comments'}
                             </span>
                         </button>

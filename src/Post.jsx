@@ -57,7 +57,10 @@ export function Post(props) {
                     </div>
                     <div className="horizontal-separator"></div>
                     <div className="container flex-col">
-                        <Comments postId={id}></Comments>
+                        <Comments
+                            postId={id}
+                            count={post.comment_count}
+                        ></Comments>
                     </div>
                 </>
             )}
