@@ -1,28 +1,41 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Header } from './Header';
 import { PostCard } from './PostCard';
 import './styles/posts.css';
 import { useFetchData } from './hooks/useFetchData';
 import { PostCardSkeleton } from './PostCardSkeleton';
 import { usePagination } from './hooks/usePagination';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
 export function Posts() {
+    function fetchPosts({ pageParam }) {
+        let url = 'http://localhost:3000/posts?is_published=true';
+        if (pageParam)
+            url += `&lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
+        return fetch(url).then((res) => res.json());
+    }
     const {
-        results: posts,
-        loading,
+        data: posts,
         error,
+        hasNextPage,
         fetchNextPage,
-        loadingNextPage,
-        nextPageError
-    } = usePagination('https://odin-blog-api-beta.vercel.app/published_posts');
-
+        isFetchingNextPage,
+        status
+    } = useInfiniteQuery({
+        queryKey: ['posts'],
+        queryFn: fetchPosts,
+        initialPageParam: null,
+        getNextPageParam: (lastPage) => {
+            return lastPage.metadata.nextPageParams;
+        }
+    });
     useEffect(() => {
         function handleScroll() {
             if (
                 window.innerHeight + window.scrollY + 1 >=
                 document.body.offsetHeight
             ) {
-                if (!loadingNextPage) {
+                if (!isFetchingNextPage) {
                     fetchNextPage();
                 }
             }
@@ -31,7 +44,7 @@ export function Posts() {
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
-    }, [fetchNextPage, loadingNextPage]);
+    }, [fetchNextPage, isFetchingNextPage]);
 
     return (
         <>
@@ -39,7 +52,7 @@ export function Posts() {
             <div className="posts container">
                 <div className="search-bar"></div>
                 <div className="posts flex-col">
-                    {loading ? (
+                    {status === 'pending' ? (
                         <>
                             <PostCardSkeleton></PostCardSkeleton>
                             <PostCardSkeleton></PostCardSkeleton>
@@ -47,17 +60,22 @@ export function Posts() {
                         </>
                     ) : (
                         <>
-                            {posts.map((post) => (
-                                <PostCard
-                                    key={post._id}
-                                    id={post._id}
-                                    title={post.title}
-                                    author={post.author}
-                                    summary={post.summary}
-                                    commentCount={post.comment_count}
-                                ></PostCard>
+                            {posts.pages.map((page, index) => (
+                                <React.Fragment key={index}>
+                                    {page.results.map((post) => (
+                                        <PostCard
+                                            key={post._id}
+                                            id={post._id}
+                                            title={post.title}
+                                            author={post.author}
+                                            summary={post.summary}
+                                            image={post.image}
+                                            commentCount={post.comment_count}
+                                        ></PostCard>
+                                    ))}
+                                </React.Fragment>
                             ))}
-                            {loadingNextPage && (
+                            {isFetchingNextPage && (
                                 <PostCardSkeleton></PostCardSkeleton>
                             )}
                         </>
