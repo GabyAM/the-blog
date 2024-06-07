@@ -1,78 +1,40 @@
 import { useParams } from 'react-router-dom';
-import { useFetchData } from './hooks/useFetchData';
 import { useEffect } from 'react';
 import { Header } from './Header';
 import { Comment } from './Comment';
 import { useAuth } from './hooks/useAuth';
-import { CommentTreeProvider } from './context/commentTree';
-import { addReply } from './utilities/comment';
-
-function addReplyToComment(comment, parentCommentId, newComment) {
-    if (comment._id === parentCommentId) {
-        return {
-            ...comment,
-            comments: [newComment, ...comment.comments]
-        };
-    } else if (comment.comments?.length > 0)
-        return {
-            ...comment,
-            comments: addReply(comment.comments, parentCommentId, newComment)
-        };
-    else return comment;
-}
+import './styles/commentdetail.css';
+import {
+    useInfiniteQuery,
+    useQuery,
+    useQueryClient
+} from '@tanstack/react-query';
 
 export function CommentDetail() {
     const { id } = useParams();
 
     const { token: currentUser, encodedToken } = useAuth();
+
+    function fetchComment() {
+        return fetch(`http://localhost:3000/comment/${id}`).then((res) => {
+            if (!res.ok) {
+                throw new Error('');
+            }
+            return res.json();
+        });
+    }
     const {
         data: comment,
-        setData: setComment,
-        loading,
-        error,
-        fetchData
-    } = useFetchData(`http://localhost:3000/comment/${id}`);
-
-    function handleCommentSubmit(formData, parentCommentId) {
-        return fetch(
-            `http://localhost:3000/comment/${parentCommentId}/comments`,
-            {
-                method: 'POST',
-                credentials: 'include',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: `bearer ${encodedToken}`
-                },
-                body: JSON.stringify(formData)
-            }
-        )
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error('');
-                }
-                return res.json();
-            })
-            .then((data) => {
-                const newComment = data.comment;
-                const { id, ...rest } = currentUser;
-                const newUser = { _id: id, ...rest };
-                newComment.user = newUser;
-                setComment((prevComment) =>
-                    addReplyToComment(prevComment, parentCommentId, newComment)
-                );
-            })
-            .catch((e) => {
-                throw new Error("Couldn't submit comment");
-            });
-    }
-
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
+        isLoading,
+        isError
+    } = useQuery({
+        queryKey: [`comment_${id}`],
+        queryFn: fetchComment
+    });
     return (
         <>
             <Header></Header>
-            {!loading && (
+            {!isLoading && !isError && (
                 <div className="container comment-detail-container flex-col">
                     <div className="small-post-card">
                         <div className="image-container">
@@ -89,9 +51,7 @@ export function CommentDetail() {
                     </div>
                     <div className="horizontal-separator"></div>
                     <div className="comments flex-col">
-                        <CommentTreeProvider submitReply={handleCommentSubmit}>
-                            <Comment comment={comment}></Comment>
-                        </CommentTreeProvider>
+                        <Comment comment={comment}></Comment>
                     </div>
                 </div>
             )}

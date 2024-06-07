@@ -1,18 +1,34 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import './styles/comment.css';
 import { Link } from 'react-router-dom';
 import { CommentForm } from './CommentForm';
-import { useCommentTree } from './hooks/useCommentTree';
 import { useAuth } from './hooks/useAuth';
 import { RepliesIcon, ReplyIcon } from './Icons';
+import {
+    useInfiniteQuery,
+    useMutation,
+    useQueryClient
+} from '@tanstack/react-query';
+import { CommentSkeleton } from './CommentSkeleton';
+import { useCommentReplies } from './hooks/useCommentReplies';
 
-export function Comment({ comment }) {
-    const { encodedToken: token } = useAuth();
+export function Comment({ comment, depth = 1 }) {
+    const { encodedToken: token, token: currentUser } = useAuth();
     const text = useRef(null);
     const [isOverflown, setIsOverflown] = useState(false);
     const [textHidden, setTextHidden] = useState(true);
     const [isReplying, setIsReplying] = useState(false);
-    const submitReply = useCommentTree();
+
+    const shouldFetchComments = depth < 3 && comment.comments.length > 0;
+    const {
+        comments,
+        status,
+        error,
+        hasNextPage,
+        fetchNextPage,
+        isFetchingNextPage,
+        addReply
+    } = useCommentReplies(comment._id, shouldFetchComments);
 
     useEffect(() => {
         if (text.current) {
@@ -21,14 +37,38 @@ export function Comment({ comment }) {
         }
     }, []);
 
+    const commentRef = useRef();
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && shouldFetchComments) {
+                    fetchNextPage();
+                    console.log('bottom!');
+                }
+            },
+            { root: null, rootMargin: '0px', threshold: 1.0 }
+        );
+
+        let refValue = null;
+        if (commentRef.current) {
+            observer.observe(commentRef.current);
+            refValue = commentRef.current;
+        }
+
+        return () => {
+            if (refValue) {
+                observer.unobserve(refValue);
+            }
+        };
+    }, [fetchNextPage, commentRef, comment._id, shouldFetchComments]);
+
     const isDeleted = comment.user === null;
-    const hasMoreReplies =
-        comment.comments.length > 0 && typeof comment.comments[0] === 'string';
+    const hasMoreReplies = depth % 3 === 0 && comment.comments.length > 0;
     return (
         <div
             className={
                 'comment-container flex-col' +
-                (comment.comments.length ? ' parent-comment' : '')
+                (comment.comments.length > 0 ? ' parent-comment' : '')
             }
         >
             <div
@@ -80,9 +120,7 @@ export function Comment({ comment }) {
                         <CommentForm
                             isOnComment={true}
                             onClose={() => setIsReplying(false)}
-                            onSubmit={(formData) =>
-                                submitReply(formData, comment._id)
-                            }
+                            onSubmit={addReply}
                         ></CommentForm>
                     ) : (
                         <div className="replies-actions flex-row">
@@ -114,10 +152,29 @@ export function Comment({ comment }) {
                     )}
                 </div>
             )}
-            {comment.comments.map((reply) => {
-                if (typeof reply === 'object')
-                    return <Comment key={reply._id} comment={reply}></Comment>;
-            })}
+            {isFetchingNextPage && comment.comments.length > 0 && (
+                <>
+                    <CommentSkeleton></CommentSkeleton>
+                    <CommentSkeleton></CommentSkeleton>
+                    <CommentSkeleton></CommentSkeleton>
+                </>
+            )}
+            {comments &&
+                comments.pages.map((page, index) => (
+                    <React.Fragment key={index}>
+                        {page.results.map((reply) => {
+                            if (typeof reply === 'object')
+                                return (
+                                    <Comment
+                                        key={reply._id}
+                                        comment={reply}
+                                        depth={depth + 1}
+                                    ></Comment>
+                                );
+                        })}
+                    </React.Fragment>
+                ))}
+            <div className="bottom-marker" ref={commentRef}></div>
         </div>
     );
 }
