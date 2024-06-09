@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import './styles/recentposts.css';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
