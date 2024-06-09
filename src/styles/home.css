@@ -29,20 +29,14 @@
     margin-bottom: calc(var(--space-300) * -1);
 }
 
-.rounded-button {
-    font-weight: 700;
-    font-size: 40px;
-    background: none;
+.hero button {
     border: 1px solid white;
     color: white;
-    border-radius: 100vh;
-    padding: 0.5em 2em;
-    width: fit-content;
-    margin: 0 auto;
+    background: none;
 }
-.rounded-button.inverted {
-    border: 1px solid var(--green-900);
-    color: var(--green-900);
+
+.container .posts-link {
+    margin: 0 auto;
 }
 
 main {

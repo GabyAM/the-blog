@@ -1,3 +1,4 @@
+import './styles/home.css';
 import { Link } from 'react-router-dom';
 import { RecentPosts } from './RecentPosts';
 
@@ -16,11 +17,13 @@ export function Home() {
                                 This is a headline
                             </h1>
                         </div>
-                        <button className="rounded-button">Read</button>
+                        <Link to={'/posts'} className="posts-link">
+                            <button className="large rounded">Read</button>
+                        </Link>
                     </div>
                 </div>
             </div>
-            <main className="flex-col container">
+            <main className="flex-col">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
                     do eiusmod tempor incididunt ut labore et dolore magna
