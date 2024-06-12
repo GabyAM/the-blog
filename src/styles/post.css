@@ -28,7 +28,7 @@
 }
 
 .horizontal-separator {
-    background-color: var(--main-grey);
+    background-color: var(--grey-100);
     width: 100%;
     height: 1px;
 }

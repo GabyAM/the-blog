@@ -1,7 +1,7 @@
 header {
     background-color: white;
     border: none;
-    border-bottom: 1px solid var(--main-grey);
+    border-bottom: 1px solid var(--grey-100);
 }
 
 header.sticky {

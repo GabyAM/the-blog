@@ -31,7 +31,7 @@
     font-family: 'Poppins';
     scrollbar-width: thin;
     border-radius: var(--space-300);
-    border: 1px solid var(--dark-grey);
+    border: 1px solid var(--grey-400);
     width: 100%;
     padding: var(--space-100);
 }

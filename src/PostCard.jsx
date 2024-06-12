@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export function PostCard({ id, title, author, summary, commentCount }) {
     return (
-        <div className="post-card">
+        <div className="post-card grey-card">
             <div className="post-card-text flex-col">
                 <div>
                     <Link to={`/post/${id}`}>

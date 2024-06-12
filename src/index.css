@@ -8,9 +8,10 @@
     --green-400: #5a9155;
     --green-300: #73aa6e;
     --green-200: #92bd8f;
-    --green-100: #b1d0af;
-    --main-grey: #edeeef;
-    --dark-grey: #9999a3;
+    --green-100: #d9e5d8;
+    --grey-100: #edeeef;
+    --grey-400: #9999a3;
+    --grey-900: #616167;
     --error-red: #ee5454;
 
     --space-100: 8px;
@@ -77,6 +78,12 @@ a {
     margin: 0 auto;
 }
 
+.grey-card {
+    border: 1px solid var(--grey-400);
+    border-radius: var(--space-200);
+    padding: var(--space-600) var(--space-400);
+    box-shadow: 6px 6px 0 var(--grey-100);
+}
 .primary-button {
     background-color: var(--green-400);
     color: white;
