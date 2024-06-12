@@ -39,7 +39,12 @@ export function CommentDetail() {
                     <div className="small-post-card">
                         <div className="image-container">
                             <img
-                                src={`http://localhost:3000${comment.post.image}`}
+                                src={
+                                    comment.post.image ===
+                                    '/images/post_thumbnail_placeholder.png'
+                                        ? '/post_thumbnail_placeholder.png'
+                                        : `http://localhost:3000${comment.post.image}`
+                                }
                             ></img>
                         </div>
                         <div className="text-section flex-col">

@@ -24,7 +24,13 @@ export function PostCard({ id, title, author, summary, commentCount, image }) {
             </div>
             <Link to={`/post/${id}`}>
                 <div className="image-container">
-                    <img src={`http://localhost:3000${image}`}></img>
+                    <img
+                        src={
+                            image === '/images/post_thumbnail_placeholder.png'
+                                ? '/post_thumbnail_placeholder.png'
+                                : `http://localhost:3000${image}`
+                        }
+                    ></img>
                 </div>
             </Link>
         </div>

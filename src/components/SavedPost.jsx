@@ -8,7 +8,14 @@ export function SavedPost({ post, onUnsave }) {
         <div className="saved-post">
             <div className="image-container">
                 <Link to={`/post/${post._id}`}>
-                    <img src={`http://localhost:3000${post.image}`}></img>
+                    <img
+                        src={
+                            post.image ===
+                            '/images/post_thumbnail_placeholder.png'
+                                ? '/post_thumbnail_placeholder.png'
+                                : `http://localhost:3000${post.image}`
+                        }
+                    ></img>
                 </Link>
             </div>
             <div className="text-section">

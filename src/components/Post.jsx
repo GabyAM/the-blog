@@ -109,7 +109,12 @@ export function Post() {
                             )}
                             <div className="image-container">
                                 <img
-                                    src={`http://localhost:3000${post.image}`}
+                                    src={
+                                        post.image ===
+                                        '/images/post_thumbnail_placeholder.png'
+                                            ? '/post_thumbnail_placeholder.png'
+                                            : `http://localhost:3000${post.image}`
+                                    }
                                 ></img>
                             </div>
 
