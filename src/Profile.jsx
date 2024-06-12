@@ -63,6 +63,7 @@ export function Profile() {
                     <div className="profile-card flex-col grey-card">
                         {isEditing ? (
                             <ProfileForm
+                                onCancel={() => setIsEditing(false)}
                                 onSubmit={handleEditUser}
                                 user={user}
                             ></ProfileForm>
