@@ -1,10 +1,10 @@
 import { useParams } from 'react-router-dom';
 import { Header } from './Header';
-import './styles/post.css';
+import '../styles/post.css';
 import { Comments } from './Comments';
 import { useCallback, useEffect, useState } from 'react';
 import { PostSkeleton } from './PostSkeleton';
-import { useAuth } from './hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { CheckedBookmarkIcon, UncheckedBookmarkIcon } from './Icons';
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
@@ -13,7 +13,7 @@ import {
     fetchPost,
     submitSavePost,
     submitUnsavePost
-} from './api/post';
+} from '../api/post';
 
 export function Post() {
     const { id } = useParams();

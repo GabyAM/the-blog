@@ -1,26 +1,21 @@
 import { useNavigate } from 'react-router-dom';
-
-import { AuthForm } from './AuthForm';
+import { useAuth } from '../hooks/useAuth';
+import { submitLogin } from '../api/auth';
 import { AuthFormInput } from './AuthFormInput';
-import { submitSignup } from './api/auth';
-import { useAuth } from './hooks/useAuth';
+import { AuthForm } from './AuthForm';
 
-export function SignupForm() {
-    const { encodedToken: token } = useAuth();
+export function LoginForm() {
+    const { updateToken } = useAuth();
     const navigate = useNavigate();
+
     return (
         <AuthForm
-            onSubmit={(formData) => submitSignup(formData, token)}
-            onSuccess={() => navigate('/posts')}
+            onSubmit={submitLogin}
+            onSuccess={(res) => {
+                updateToken(res.accessToken);
+                navigate('/posts');
+            }}
         >
-            <AuthFormInput
-                type="text"
-                name="name"
-                label="Name"
-                rules={{
-                    required: 'name is required'
-                }}
-            ></AuthFormInput>
             <AuthFormInput
                 type="text"
                 name="email"
@@ -43,14 +38,6 @@ export function SignupForm() {
                         value: 8,
                         message: 'Password must have at least 8 characters'
                     }
-                }}
-            ></AuthFormInput>
-            <AuthFormInput
-                type="password"
-                name="password-confirm"
-                label="Password"
-                rules={{
-                    required: 'Password confirm is required'
                 }}
             ></AuthFormInput>
         </AuthForm>

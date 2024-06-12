@@ -1,4 +1,4 @@
-import './styles/icons.css';
+import '../styles/icons.css';
 
 export function SendIcon({ width = 24, height = 24 }) {
     return (

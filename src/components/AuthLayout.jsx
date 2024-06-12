@@ -1,6 +1,6 @@
 import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
-import './styles/authlayout.css';
-import { useAuth } from './hooks/useAuth';
+import '../styles/authlayout.css';
+import { useAuth } from '../hooks/useAuth';
 
 export function AuthLayout() {
     const location = useLocation();

@@ -1,13 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import { Home } from './Home';
-import { Posts } from './Posts';
-import { Post } from './Post';
-import { UserForm } from './UserForm';
-import { LoginForm } from './LoginForm';
-import { SignupForm } from './SignupForm';
-import { Profile } from './Profile';
-import { CommentDetail } from './CommentDetail';
-import { ResetScroll } from './ResetScroll';
+import { Home } from './components/Home';
+import { Posts } from './components/Posts';
+import { Post } from './components/Post';
+import { AuthLayout } from './components/AuthLayout';
+import { LoginForm } from './components/LoginForm';
+import { SignupForm } from './components/SignupForm';
+import { Profile } from './components/Profile';
+import { CommentDetail } from './components/CommentDetail';
+import { ResetScroll } from './components/ResetScroll';
 
 export function Router() {
     const router = createBrowserRouter([
@@ -29,7 +29,7 @@ export function Router() {
                 },
                 {
                     path: '/',
-                    element: <UserForm></UserForm>,
+                    element: <AuthLayout></AuthLayout>,
                     children: [
                         {
                             path: '/login',

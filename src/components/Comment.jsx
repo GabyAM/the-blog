@@ -1,12 +1,12 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import './styles/comment.css';
+import '../styles/comment.css';
 import { Link } from 'react-router-dom';
 import { CommentForm } from './CommentForm';
-import { useAuth } from './hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { RepliesIcon, ReplyIcon } from './Icons';
 import { CommentSkeleton } from './CommentSkeleton';
-import { fetchCommentReplies, submitCommentReply } from './api/comment';
-import { useComments } from './hooks/useComments';
+import { fetchCommentReplies, submitCommentReply } from '../api/comment';
+import { useComments } from '../hooks/useComments';
 
 export function Comment({ comment, depth = 1 }) {
     const { encodedToken: token, token: currentUser } = useAuth();

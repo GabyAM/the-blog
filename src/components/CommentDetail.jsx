@@ -2,8 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Header } from './Header';
 import { Comment } from './Comment';
-import { useAuth } from './hooks/useAuth';
-import './styles/commentdetail.css';
+import { useAuth } from '../hooks/useAuth';
+import '../styles/commentdetail.css';
 import {
     useInfiniteQuery,
     useQuery,

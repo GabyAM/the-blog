@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { Header } from './Header';
 import { PostCard } from './PostCard';
-import './styles/posts.css';
+import '../styles/posts.css';
 import { PostCardSkeleton } from './PostCardSkeleton';
 import { useInfiniteQuery } from '@tanstack/react-query';
-import { fetchPosts } from './api/post';
+import { fetchPosts } from '../api/post';
 
 export function Posts() {
     const {

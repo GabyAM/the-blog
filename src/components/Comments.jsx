@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Comment } from './Comment';
-import './styles/comments.css';
+import '../styles/comments.css';
 import { CommentForm } from './CommentForm';
 import { CaretIcon } from './Icons';
-import { useAuth } from './hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { CommentSkeleton } from './CommentSkeleton';
-import { useComments } from './hooks/useComments';
-import { fetchPostComments, submitPostComment } from './api/comment';
+import { useComments } from '../hooks/useComments';
+import { fetchPostComments, submitPostComment } from '../api/comment';
 
 export function Comments({ postId, count }) {
     const {

@@ -1,5 +1,5 @@
-import './styles/header.css';
-import { useAuth } from './hooks/useAuth';
+import '../styles/header.css';
+import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 
 export function Header({ sticky }) {

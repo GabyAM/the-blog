@@ -1,4 +1,4 @@
-import './styles/authforminput.css';
+import '../styles/authforminput.css';
 import { ErrorIcon } from './Icons';
 
 export function AuthFormInput({

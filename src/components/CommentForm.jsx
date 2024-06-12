@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './styles/commentform.css';
+import '../styles/commentform.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ErrorIcon } from './Icons';

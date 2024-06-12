@@ -1,8 +1,8 @@
 import toast from 'react-hot-toast';
-import './styles/savedposts.css';
+import '../styles/savedposts.css';
 import { SavedPost } from './SavedPost';
-import { submitUnsavePost } from './api/post';
-import { useAuth } from './hooks/useAuth';
+import { submitUnsavePost } from '../api/post';
+import { useAuth } from '../hooks/useAuth';
 import { useMutation } from '@tanstack/react-query';
 
 export function SavedPosts({ posts, setPosts }) {

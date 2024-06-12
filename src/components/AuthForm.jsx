@@ -1,4 +1,4 @@
-import './styles/authform.css';
+import '../styles/authform.css';
 import { useForm } from 'react-hook-form';
 import { ErrorIcon } from './Icons';
 import React from 'react';

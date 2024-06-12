@@ -1,15 +1,15 @@
 import { useParams } from 'react-router-dom';
 import { Header } from './Header';
-import './styles/profile.css';
+import '../styles/profile.css';
 import { useEffect, useState } from 'react';
 import { EditIcon } from './Icons';
 import { ProfileCardSkeleton } from './ProfileCardSkeleton';
-import { useAuth } from './hooks/useAuth';
+import { useAuth } from '../hooks/useAuth';
 import { ProfileForm } from './ProfileForm';
 import toast from 'react-hot-toast';
 import { SavedPosts } from './SavedPosts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchUser, submitUserEdit } from './api/user';
+import { fetchUser, submitUserEdit } from '../api/user';
 
 export function Profile() {
     const { id } = useParams();

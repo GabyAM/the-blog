@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './styles/postcard.css';
+import '../styles/postcard.css';
 import { Link } from 'react-router-dom';
 
 export function PostCard({ id, title, author, summary, commentCount, image }) {
