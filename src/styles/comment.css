@@ -9,7 +9,7 @@
     top: 50px;
     width: 2px;
     height: calc(100% - 50px);
-    background-color: var(--green-200);
+    background-color: var(--green-100);
 }
 .comment {
     display: grid;
@@ -29,6 +29,10 @@
 .comment .image-container {
     width: 44px;
     align-self: start;
+    aspect-ratio: 1/1;
+}
+.comment .image-container img {
+    border-radius: var(--space-200);
 }
 
 .comment .text {
@@ -37,6 +41,9 @@
     gap: var(--space-100);
 }
 
+.comment p {
+    word-break: break-word;
+}
 .comment p.overflown {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -55,4 +62,21 @@
 
 .comment-container .comment-container {
     margin-left: var(--space-600);
+}
+
+.comment-container .replies-section {
+    margin-left: calc(44px + var(--space-200));
+}
+
+.replies-section .replies-actions {
+    gap: var(--space-200);
+}
+
+.replies-actions .action-button {
+    align-items: center;
+    gap: var(--space-100);
+}
+
+.bottom-marker {
+    position: absolute;
 }

@@ -1,0 +1,35 @@
+.comment-detail-container {
+    gap: var(--space-400);
+    padding: var(--space-600) 0;
+}
+
+.small-post-card {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    gap: var(--space-500);
+}
+
+.small-post-card .image-container,
+.small-post-card .image-container img {
+    aspect-ratio: 1/1;
+    max-width: var(--space-800);
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    border-radius: var(--space-200);
+}
+
+.small-post-card .text-section {
+    gap: var(--space-300);
+}
+.small-post-card h2 {
+    color: var(--green-900);
+    font-size: 20px;
+}
+
+.small-post-card p {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--dark-grey);
+}
