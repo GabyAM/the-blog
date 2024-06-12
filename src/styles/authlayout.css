@@ -1,0 +1,80 @@
+.user-form-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    flex: 1;
+}
+
+.user-form-background {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-form-background h1 {
+    font-size: 64px;
+    font-weight: 400;
+    max-width: 400px;
+    text-align: center;
+}
+
+.user-form-section {
+    background-color: var(--green-900);
+    display: flex;
+    justify-content: center;
+}
+
+.user-form-container {
+    width: 100%;
+    max-width: 350px;
+    gap: var(--space-200);
+    padding: var(--space-500) 0;
+}
+
+.user-form-container h1 {
+    font-size: 64px;
+    font-weight: 400;
+    color: white;
+    text-align: center;
+    line-height: 1;
+}
+
+.method-tabs {
+    list-style: none;
+    font-size: 14px;
+    gap: var(--space-500);
+    justify-content: center;
+    color: white;
+    position: relative;
+    z-index: 1;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.method-tabs li {
+    flex: 1;
+    min-width: 60px;
+    text-align: center;
+    text-wrap: nowrap;
+}
+
+.method-tabs li.selected {
+    color: var(--green-900);
+    transition: color 0.5s ease;
+}
+
+.tab-highlight {
+    position: absolute;
+    width: var(--space-700);
+    height: 100%;
+    background-color: var(--green-100);
+    border-radius: 100vh;
+    z-index: -1;
+
+    transition: left 0.3s ease;
+    left: calc(((var(--space-700) - 60px) / 2) * -1);
+}
+.tab-highlight.right {
+    left: calc(100% - var(--space-700) + ((var(--space-700) - 60px) / 2));
+}

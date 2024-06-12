@@ -1,8 +1,8 @@
 import { Outlet, Link, useLocation, Navigate } from 'react-router-dom';
-import './styles/login.css';
+import './styles/authlayout.css';
 import { useAuth } from './hooks/useAuth';
 
-export function UserForm() {
+export function AuthLayout() {
     const location = useLocation();
     const { token } = useAuth();
     if (token) {

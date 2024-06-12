@@ -1,0 +1,44 @@
+.user-form {
+    /* max-width: 400px; */
+    width: 100%;
+    margin: 0 auto;
+
+    gap: var(--space-400);
+    text-align: center;
+}
+
+.user-form label {
+    color: white;
+    gap: var(--space-100);
+    text-align: left;
+    font-size: 16px;
+    display: grid;
+    grid-template-rows: auto auto 16px;
+}
+
+.form-error {
+    color: var(--error-red);
+    font-size: 14px;
+    gap: var(--space-100);
+}
+.form-error svg {
+    flex-shrink: 0;
+}
+.form-error span {
+    margin-top: -0.25em;
+}
+.fields-container {
+    gap: var(--space-200);
+}
+
+.user-form button {
+    background-color: var(--green-100);
+    color: var(--green-900);
+    border: none;
+    border-radius: 100vh;
+    width: fit-content;
+    font-size: 24px;
+    font-weight: 700;
+    padding: 0.5em 2em;
+    margin: 0 auto;
+}
