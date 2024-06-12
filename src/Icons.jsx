@@ -82,12 +82,15 @@ export function EditIcon({ width = 24, height = 24 }) {
             strokeWidth={2}
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="icon icon-tabler icons-tabler-outline icon-tabler-edit"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-pencil"
         >
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1" />
-            <path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415z" />
-            <path d="M16 5l3 3" />
+            <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+            <path d="M13.5 6.5l4 4" />
+        </svg>
+    );
+}
+
 export function ReplyIcon({ width = 24, height = 24 }) {
     return (
         <svg
@@ -131,6 +134,61 @@ export function RepliesIcon({ width = 24, height = 24 }) {
     );
 }
 
+export function ImageIcon({ width = 24, height = 24 }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-photo"
+        >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M15 8h.01" />
+            <path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z" />
+            <path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5" />
+            <path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3" />
+        </svg>
+    );
+}
+
+export function UncheckedBookmarkIcon({ width = 24, height = 24 }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="icon icon-tabler icons-tabler-outline icon-tabler-bookmark"
+        >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M18 7v14l-6 -4l-6 4v-14a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4z" />
+        </svg>
+    );
+}
+
+export function CheckedBookmarkIcon({ width = 24, height = 24 }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="icon icon-tabler icons-tabler-filled icon-tabler-bookmark"
+        >
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M14 2a5 5 0 0 1 5 5v14a1 1 0 0 1 -1.555 .832l-5.445 -3.63l-5.444 3.63a1 1 0 0 1 -1.55 -.72l-.006 -.112v-14a5 5 0 0 1 5 -5h4z" />
         </svg>
     );
 }
