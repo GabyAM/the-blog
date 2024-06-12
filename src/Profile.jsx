@@ -89,7 +89,10 @@ export function Profile() {
                                                 }
                                                 className="secondary-button rounded medium profile-edit-button flex-row"
                                             >
-                                                <EditIcon></EditIcon>
+                                                <EditIcon
+                                                    width="1em"
+                                                    height="1em"
+                                                ></EditIcon>
                                                 <span>Edit</span>
                                             </button>
                                         )}

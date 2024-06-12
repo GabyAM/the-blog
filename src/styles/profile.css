@@ -1,37 +1,44 @@
 .profile-container {
     padding: var(--space-600) 0;
+    color: var(--green-900);
+}
+
+.profile-container .grey-card {
+    padding: var(--space-600);
 }
 
 .profile-card {
-    background-color: var(--green-400);
-    padding: var(--space-600) var(--space-500);
-    margin: 0 var(--space-700);
+    gap: var(--space-600);
+}
+
+.profile-container .main-section {
+    gap: var(--space-600);
+}
+.profile-container .image-container {
+    width: var(--space-900);
+    height: var(--space-900);
+}
+
+.profile-container .image-container img {
     border-radius: var(--space-300);
-    gap: var(--space-400);
-    display: grid;
-    grid-template-columns: auto 1fr;
+    object-fit: cover;
 }
 
-.profile-card .image-container {
-    width: 200px;
+.profile-user-info {
+    flex: 1;
 }
 
-.profile-card-info {
-    color: white;
-    padding: var(--space-300) 0;
-    max-width: 100%;
-    overflow: hidden;
+.profile-user-info span {
+    display: block;
+    word-break: break-all;
+}
+.profile-user-info .user-name {
+    font-size: 32px;
+    font-weight: 500;
 }
 
-.profile-card-info .text span {
-    overflow-wrap: break-word;
-}
-.profile-card-info .text span:first-of-type {
-    font-size: 36px;
-}
-.profile-card-info .text span:last-of-type {
+.profile-user-info .user-email {
     font-size: 20px;
-    font-weight: 200;
 }
 
 .profile-container .profile-edit-button {
@@ -40,7 +47,12 @@
     align-items: center;
     gap: var(--space-100);
 }
-.profile-edit-button span {
-    font-size: 24px;
-    font-weight: 500;
+
+.profile-card .title-primary {
+    font-size: 28px;
+    font-weight: 300;
+}
+
+.profile-card .title-primary.small {
+    font-size: 20px;
 }
