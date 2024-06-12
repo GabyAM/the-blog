@@ -1,5 +1,6 @@
 import './styles/header.css';
 import { useAuth } from './hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 export function Header({ sticky }) {
     const { token: currentUser, removeToken } = useAuth();
@@ -12,10 +13,14 @@ export function Header({ sticky }) {
                 </div>
                 <ul className="header-links flex-row">
                     <li>
-                        <a href="/">Home</a>
+                        <a className="header-main-link" href="/">
+                            Home
+                        </a>
                     </li>
                     <li>
-                        <a href="/posts">Posts</a>
+                        <a className="header-main-link" href="/posts">
+                            Posts
+                        </a>
                     </li>
                 </ul>
                 <div
@@ -23,7 +28,10 @@ export function Header({ sticky }) {
                 >
                     {currentUser ? (
                         <>
-                            <div className="header-user-card">
+                            <Link
+                                to={`/user/${currentUser.id}`}
+                                className="header-user-card"
+                            >
                                 <div className="image-container">
                                     <img
                                         src={
@@ -38,9 +46,9 @@ export function Header({ sticky }) {
                                     <span>{currentUser.name}</span>
                                     <span>{currentUser.email}</span>
                                 </div>
-                            </div>
+                            </Link>
                             <button
-                                className="logout-button"
+                                className="user-auth-link outlined-button-900 light-outline small rounded"
                                 onClick={() => {
                                     removeToken();
                                 }}
@@ -50,8 +58,18 @@ export function Header({ sticky }) {
                         </>
                     ) : (
                         <>
-                            <a href="/login">Login</a>
-                            <a href="/signup">Sign up</a>
+                            <Link
+                                className="user-auth-link outlined-button-900 small rounded"
+                                to="/login"
+                            >
+                                Login
+                            </Link>
+                            <Link
+                                className="user-auth-link primary-button small rounded"
+                                to="/signup"
+                            >
+                                Sign up
+                            </Link>
                         </>
                     )}
                 </div>

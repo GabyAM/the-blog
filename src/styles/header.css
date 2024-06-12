@@ -58,21 +58,9 @@ header .logo {
     max-width: 200px;
 }
 
-.user-section a {
-    padding: 0.25em 0.8em;
+.user-section .user-auth-link {
     text-align: center;
-    border-radius: 100vw;
     white-space: nowrap;
-}
-
-.user-section a:first-of-type {
-    color: var(--green-400);
-    border: 1px solid var(--green-400);
-}
-
-.user-section a:last-of-type {
-    background-color: var(--green-300);
-    color: white;
 }
 
 .user-section.logged-in {
@@ -85,6 +73,13 @@ header .logo {
     max-height: 100%;
     gap: var(--space-200);
     align-items: center;
+    padding: 0 var(--space-200);
+    transition: background-color 0.3s ease;
+    border-radius: var(--space-300);
+    background-color: white;
+}
+.header-user-card:hover {
+    background-color: var(--grey-100);
 }
 
 .header-user-card .image-container {
@@ -105,15 +100,4 @@ header .logo {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.logout-button {
-    border: 1px solid var(--green-900);
-    border-radius: 100vh;
-    color: var(--green-900);
-    background: none;
-    height: fit-content;
-    white-space: nowrap;
-    padding: 0.25em 0.8em;
-    font-size: 16px;
 }
