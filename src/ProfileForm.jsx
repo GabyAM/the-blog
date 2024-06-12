@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ImageInput } from './ImageInput';
 import { useForm } from 'react-hook-form';
 import { CaretIcon, ErrorIcon } from './Icons';
+import './styles/profileform.css';
 
 export function ProfileForm({ user, onSubmit, onCancel }) {
     const [isPasswordFormOpen, setIsPasswordFormOpen] = useState(false);

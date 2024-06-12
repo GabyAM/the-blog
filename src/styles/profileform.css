@@ -1,0 +1,63 @@
+.profile-edit-form {
+    gap: var(--space-300);
+    position: relative;
+    padding-bottom: var(--space-500);
+}
+
+.profile-edit-form section {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-100);
+}
+
+.profile-edit-form .text-input {
+    font-family: inherit;
+    color: black;
+    background-color: transparent;
+    border: none;
+    padding: 0 var(--space-200);
+}
+.profile-edit-form .main-text-input {
+    font-size: 32px;
+    /* padding-left: var(--space-200); */
+}
+
+.profile-edit-form .secondary-text-input {
+    font-size: 16px;
+}
+
+.profile-edit-form .password-subform {
+    margin-top: var(--space-800);
+    max-width: 600px;
+    width: 100%;
+}
+
+.password-subform .toggle-form-button {
+    background: none;
+    border: none;
+    color: var(--green-900);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: fit-content;
+    margin: var(--space-300) 0;
+}
+
+.password-subform .passwords-container {
+    gap: var(--space-400);
+    padding: 0 var(--space-400);
+}
+
+.passwords-container > * {
+    flex: 1;
+}
+
+.profile-edit-form .profile-form-save-button {
+    position: absolute;
+    bottom: calc(0px - var(--space-600));
+    transform: translateY(50%);
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+}

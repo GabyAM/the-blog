@@ -1,3 +1,4 @@
+import './styles/imageinput.css';
 import { useController } from 'react-hook-form';
 import { ImageIcon } from './Icons';
 
