@@ -2,60 +2,49 @@ import { useParams } from 'react-router-dom';
 import { Header } from './Header';
 import './styles/post.css';
 import { Comments } from './Comments';
-import { useFetchData } from './hooks/useFetchData';
-import { useEffect, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { useCallback, useEffect, useState } from 'react';
 import { PostSkeleton } from './PostSkeleton';
 import { useAuth } from './hooks/useAuth';
 import { CheckedBookmarkIcon, UncheckedBookmarkIcon } from './Icons';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import {
+    fetchIsPostSaved,
+    fetchPost,
+    submitSavePost,
+    submitUnsavePost
+} from './api/post';
 
-export function Post(props) {
+export function Post() {
     const { id } = useParams();
     const { encodedToken } = useAuth();
+
+    const fetchFn = useCallback(() => fetchPost(id), [id]);
     const {
         data: post,
-        loading,
-        error,
-        fetchData: fetchPost
-    } = useFetchData(`http://localhost:3000/post/${id}`);
+        isLoading,
+        error
+    } = useQuery({
+        queryKey: [`post_${id}`],
+        queryFn: fetchFn
+    });
     const [isSaved, setIsSaved] = useState(false);
     const [isSavingOrUnsaving, setIsSavingOrUnsaving] = useState(false);
-    useEffect(() => {
-        fetchPost();
-    }, [fetchPost]);
+
     useEffect(() => {
         if (encodedToken) {
-            fetch(`http://localhost:3000/post/${id}/saved`, {
-                credentials: 'include',
-                headers: { Authorization: `bearer ${encodedToken}` }
-            })
-                .then((res) => {
-                    return res.json();
-                })
-                .then((data) => {
-                    setIsSaved(data.isSaved);
-                });
+            fetchIsPostSaved(id, encodedToken).then((data) => {
+                setIsSaved(data.isSaved);
+            });
         }
     }, [id, post, encodedToken]);
 
     function handlePostSaveOrUnsave() {
         if (!isSavingOrUnsaving) {
             setIsSavingOrUnsaving(true);
-            const promise = fetch(
-                `http://localhost:3000/post/${id}/${isSaved ? 'unsave' : 'save'}`,
-                {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        Authorization: `bearer ${encodedToken}`
-                    }
-                }
-            )
-                .then((res) => {
-                    if (!res.ok) {
-                        throw new Error('');
-                    }
+            const submitFn = isSaved ? submitUnsavePost : submitSavePost;
+            const promise = submitFn(id, encodedToken)
+                .then(() => {
                     setIsSaved(!isSaved);
                 })
                 .catch((e) => {
@@ -83,7 +72,7 @@ export function Post(props) {
                         }
                     </p>
                 </>
-            ) : loading ? (
+            ) : isLoading ? (
                 <PostSkeleton></PostSkeleton>
             ) : (
                 <>

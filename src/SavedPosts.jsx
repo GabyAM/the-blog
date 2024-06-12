@@ -1,7 +1,11 @@
 import toast from 'react-hot-toast';
 import { SavedPost } from './SavedPost';
+import { submitUnsavePost } from './api/post';
+import { useAuth } from './hooks/useAuth';
+import { useMutation } from '@tanstack/react-query';
 
-export function SavedPosts({ posts, setPosts, token }) {
+export function SavedPosts({ posts, setPosts }) {
+    const { encodedToken } = useAuth();
     function updatePost(postIndex, update) {
         setPosts((prevPosts) => {
             const newPosts = [...prevPosts];
@@ -9,34 +13,30 @@ export function SavedPosts({ posts, setPosts, token }) {
             return newPosts;
         });
     }
+
+    const mutation = useMutation({
+        mutationKey: ['unsave_post'],
+        mutationFn: ({ id, index }) => submitUnsavePost(id, encodedToken),
+        onSuccess: (data, variables) => {
+            const { postIndex } = variables;
+            setPosts((prevPosts) => {
+                const newPosts = [...prevPosts];
+                newPosts.splice(postIndex, 1);
+                return newPosts;
+            });
+        },
+        onError: (error, variables) => {
+            const { postIndex } = variables;
+            updatePost(postIndex, { isPending: false });
+        }
+    });
     function unsavePost(id) {
         const postIndex = posts.findIndex((post) => post._id === id);
         updatePost(postIndex, { isPending: true });
-
-        const promise = fetch(`http://localhost:3000/post/${id}/unsave`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                Authorization: `bearer ${token}`,
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(() => {
-                setPosts((prevPosts) => {
-                    const newPosts = [...prevPosts];
-                    newPosts.splice(postIndex, 1);
-                    return newPosts;
-                });
-            })
-            .catch((e) => {
-                updatePost(postIndex, { isPending: false });
-                throw new Error("Couldn't unsave post");
-            });
-
-        toast.promise(promise, {
+        toast.promise(mutation.mutateAsync({ id, postIndex }), {
             loading: 'Unsaving post...',
             success: 'Post unsaved',
-            error: (e) => e.message
+            error: () => "Couldn't unsave post"
         });
     }
     return (

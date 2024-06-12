@@ -4,13 +4,9 @@ import { Link } from 'react-router-dom';
 import { CommentForm } from './CommentForm';
 import { useAuth } from './hooks/useAuth';
 import { RepliesIcon, ReplyIcon } from './Icons';
-import {
-    useInfiniteQuery,
-    useMutation,
-    useQueryClient
-} from '@tanstack/react-query';
 import { CommentSkeleton } from './CommentSkeleton';
-import { useCommentReplies } from './hooks/useCommentReplies';
+import { fetchCommentReplies, submitCommentReply } from './api/comment';
+import { useComments } from './hooks/useComments';
 
 export function Comment({ comment, depth = 1 }) {
     const { encodedToken: token, token: currentUser } = useAuth();
@@ -27,8 +23,14 @@ export function Comment({ comment, depth = 1 }) {
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
-        addReply
-    } = useCommentReplies(comment._id, shouldFetchComments);
+        addComment: addReply
+    } = useComments(
+        comment._id,
+        comment.comments.length,
+        fetchCommentReplies,
+        submitCommentReply,
+        shouldFetchComments
+    );
 
     useEffect(() => {
         if (text.current) {

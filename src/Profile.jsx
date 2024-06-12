@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { Header } from './Header';
-import { useFetchData } from './hooks/useFetchData';
 import './styles/profile.css';
 import { useEffect, useState } from 'react';
 import { EditIcon } from './Icons';
@@ -9,62 +8,57 @@ import { useAuth } from './hooks/useAuth';
 import { ProfileForm } from './ProfileForm';
 import toast from 'react-hot-toast';
 import { SavedPosts } from './SavedPosts';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { fetchUser, submitUserEdit } from './api/user';
 
 export function Profile() {
     const { id } = useParams();
+    const { token: currentUser, encodedToken, loading } = useAuth();
+
     const {
         data: user,
-        setData: setUser,
-        loading,
-        error,
-        fetchData: fetchUser
-    } = useFetchData(`http://localhost:3000/user/${id}`);
+        isLoading,
+        error
+    } = useQuery({
+        queryKey: [`user_${id}`],
+        queryFn: () => fetchUser(id, encodedToken),
+        enabled: !loading
+    });
 
     const [savedPosts, setSavedPosts] = useState([]);
-
-    const { token: currentUser, encodedToken } = useAuth();
     const [isEditing, setIsEditing] = useState(false);
 
-    useEffect(() => {
-        fetchUser();
-    }, [fetchUser]);
     useEffect(() => {
         if (user && user.saved_posts) {
             setSavedPosts(user.saved_posts);
         }
     }, [user]);
-    function handleEditUser(formData) {
-        const promise = fetch(`http://localhost:3000/user/${id}/update`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                Authorization: `bearer ${encodedToken}`
-            },
-            body: formData
-        })
-            .then(async (res) => {
-                const data = await res.json();
-                const user = data.user;
-                setUser(user);
-            })
-            .catch((e) => {
-                return new Error("Couldn't update user");
-            })
-            .finally(setIsEditing(false));
 
-        toast.promise(promise, {
+    const queryClient = useQueryClient();
+    const mutation = useMutation({
+        mutationKey: [`user_${id}_edit`],
+        mutationFn: (formData) => submitUserEdit(formData, id, encodedToken),
+        onSuccess: (data) => {
+            const user = data.user;
+            queryClient.setQueryData([`user_${id}`], () => user);
+        },
+        onError: () => new Error("Couldn't update user"),
+        onSettled: () => setIsEditing(false)
+    });
+    function handleEditUser(formData) {
+        toast.promise(mutation.mutateAsync(formData), {
             loading: 'Updating user...',
             success: 'User updated successfully',
             error: (e) => e.message
         });
     }
 
-    const isOwnProfile = currentUser ? currentUser.id === id : undefined;
+    const isOwnProfile = currentUser ? currentUser.id === id : false;
 
     return (
         <>
             <Header></Header>
-            {!loading && (
+            {!isLoading && user && (
                 <div className="container profile-container">
                     <div className="profile-card flex-col grey-card">
                         {isEditing ? (
@@ -100,13 +94,12 @@ export function Profile() {
                                         )}
                                     </div>
                                 </div>
-                                {isOwnProfile && (
+                                {isOwnProfile && savedPosts.length > 0 && (
                                     <>
                                         <div className="horizontal-separator"></div>
                                         <SavedPosts
                                             posts={savedPosts}
                                             setPosts={setSavedPosts}
-                                            token={encodedToken}
                                         ></SavedPosts>
                                     </>
                                 )}

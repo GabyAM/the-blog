@@ -1,19 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Header } from './Header';
 import { PostCard } from './PostCard';
 import './styles/posts.css';
-import { useFetchData } from './hooks/useFetchData';
 import { PostCardSkeleton } from './PostCardSkeleton';
-import { usePagination } from './hooks/usePagination';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { fetchPosts } from './api/post';
 
 export function Posts() {
-    function fetchPosts({ pageParam }) {
-        let url = 'http://localhost:3000/posts?is_published=true';
-        if (pageParam)
-            url += `&lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
-        return fetch(url).then((res) => res.json());
-    }
     const {
         data: posts,
         error,
@@ -23,7 +16,7 @@ export function Posts() {
         status
     } = useInfiniteQuery({
         queryKey: ['posts'],
-        queryFn: fetchPosts,
+        queryFn: ({ pageParam }) => fetchPosts(pageParam),
         initialPageParam: null,
         getNextPageParam: (lastPage) => {
             return lastPage.metadata.nextPageParams;

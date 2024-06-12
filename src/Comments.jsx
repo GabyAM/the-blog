@@ -5,7 +5,8 @@ import { CommentForm } from './CommentForm';
 import { CaretIcon } from './Icons';
 import { useAuth } from './hooks/useAuth';
 import { CommentSkeleton } from './CommentSkeleton';
-import { usePostComments } from './hooks/usePostComments';
+import { useComments } from './hooks/useComments';
+import { fetchPostComments, submitPostComment } from './api/comment';
 
 export function Comments({ postId, count }) {
     const {
@@ -17,7 +18,7 @@ export function Comments({ postId, count }) {
         isFetchingNextPage,
         status,
         addComment
-    } = usePostComments(postId, count);
+    } = useComments(postId, count, fetchPostComments, submitPostComment);
 
     const [hidden, setHidden] = useState(true);
     const { encodedToken } = useAuth();

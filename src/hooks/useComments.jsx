@@ -3,17 +3,16 @@ import {
     useMutation,
     useQueryClient
 } from '@tanstack/react-query';
-import { useAuth } from './useAuth';
 import { useState } from 'react';
+import { useAuth } from './useAuth';
 
-function fetchComments(pageParam, commentId) {
-    let url = `http://localhost:3000/comment/${commentId}/comments`;
-    if (pageParam)
-        url += `?lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
-    return fetch(url).then((res) => res.json());
-}
-
-export function useCommentReplies(commentId, enabled) {
+export function useComments(
+    parentId,
+    count,
+    fetchFn,
+    submitFn,
+    enabled = true
+) {
     const {
         data: comments,
         error,
@@ -22,45 +21,30 @@ export function useCommentReplies(commentId, enabled) {
         isFetchingNextPage,
         status
     } = useInfiniteQuery({
-        queryKey: [`${commentId}_replies`],
+        queryKey: [`${parentId}_comments`],
         queryFn: ({ pageParam }) => {
-            if (enabled) {
-                return fetchComments(pageParam, commentId);
-            }
+            if (enabled) return fetchFn(pageParam, parentId);
         },
         initialPageParam: null,
         getNextPageParam: (lastPage) => lastPage.metadata.nextPageParams,
         enabled: enabled
     });
 
+    const [commentCount, setCommentCount] = useState(count);
+
     const { encodedToken, token: currentUser } = useAuth();
-    function addCommentReply(formData) {
-        return fetch(`http://localhost:3000/comment/${commentId}/comments`, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-                Authorization: `bearer ${encodedToken}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        }).then((res) => {
-            if (!res.ok) {
-                throw new Error('');
-            }
-            return res.json();
-        });
-    }
     const queryClient = useQueryClient();
+
     const mutation = useMutation({
-        mutationKey: [`${commentId}_add_reply`],
-        mutationFn: addCommentReply,
+        mutationKey: [`${parentId}_submit_comment`],
+        mutationFn: (formData) => submitFn(formData, parentId, encodedToken),
         onSuccess: (data) => {
             const newComment = data.comment;
             const { id, ...rest } = currentUser;
             const newUser = { _id: id, ...rest };
             newComment.user = newUser;
             queryClient.setQueryData(
-                [`${commentId}_replies`],
+                [`${parentId}_comments`],
                 (prevComments) => {
                     const newComments = prevComments
                         ? { ...prevComments }
@@ -82,20 +66,22 @@ export function useCommentReplies(commentId, enabled) {
                     return newComments;
                 }
             );
+            setCommentCount((prev) => prev + 1);
         }
     });
 
-    function addReply(formData) {
+    function addComment(formData) {
         return mutation.mutateAsync(formData);
     }
 
     return {
         comments,
+        commentCount,
         status,
         error,
         hasNextPage,
-        fetchNextPage,
         isFetchingNextPage,
-        addReply
+        fetchNextPage,
+        addComment
     };
 }
