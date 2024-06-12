@@ -1,25 +1,33 @@
 .user-form-layout {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    flex: 1;
 }
 
 .user-form-background {
-    flex: 1;
-    position: relative;
+    background-image: url('../../public/auth-form-background.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: sticky;
+    right: 0;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .user-form-background h1 {
+    color: var(--green-900);
     font-size: 64px;
     font-weight: 400;
     max-width: 400px;
     text-align: center;
+    flex-shrink: 0;
 }
 
 .user-form-section {
+    flex-shrink: 0;
     background-color: var(--green-900);
     display: flex;
     justify-content: center;

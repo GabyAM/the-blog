@@ -15,6 +15,7 @@ export function LoginForm() {
                 updateToken(res.accessToken);
                 navigate('/posts');
             }}
+            buttonText="Log in"
         >
             <AuthFormInput
                 type="text"

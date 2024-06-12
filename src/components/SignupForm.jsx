@@ -12,6 +12,7 @@ export function SignupForm() {
         <AuthForm
             onSubmit={(formData) => submitSignup(formData, token)}
             onSuccess={() => navigate('/posts')}
+            buttonText="Sign up"
         >
             <AuthFormInput
                 type="text"

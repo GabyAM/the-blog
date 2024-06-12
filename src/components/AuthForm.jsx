@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ErrorIcon } from './Icons';
 import React from 'react';
 
-export function AuthForm({ onSubmit, onSuccess, children }) {
+export function AuthForm({ onSubmit, onSuccess, buttonText, children }) {
     const {
         register,
         handleSubmit,
@@ -53,7 +53,7 @@ export function AuthForm({ onSubmit, onSuccess, children }) {
                     });
                 })}
             </div>
-            <button>Log in</button>
+            <button>{buttonText}</button>
             {errors && errors.root && errors.root.serverError && (
                 <span className="form-error flex-row">
                     <ErrorIcon width={16} height={16}></ErrorIcon>
