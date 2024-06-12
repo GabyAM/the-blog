@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './styles/postcard.css';
 import { Link } from 'react-router-dom';
 
-export function PostCard({ id, title, author, summary, commentCount }) {
+export function PostCard({ id, title, author, summary, commentCount, image }) {
     return (
         <div className="post-card grey-card">
             <div className="post-card-text flex-col">
@@ -13,7 +13,7 @@ export function PostCard({ id, title, author, summary, commentCount }) {
                     <span>
                         By{' '}
                         <a href="#" className="author-link">
-                            {author}
+                            {author.name}
                         </a>
                     </span>
                 </div>
@@ -24,7 +24,7 @@ export function PostCard({ id, title, author, summary, commentCount }) {
             </div>
             <Link to={`/post/${id}`}>
                 <div className="image-container">
-                    <img></img>
+                    <img src={`http://localhost:3000${image}`}></img>
                 </div>
             </Link>
         </div>

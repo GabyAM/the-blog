@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 export function PostCardSkeleton() {
     return (
-        <div className="post-card">
+        <div className="post-card grey-card">
             <div className="post-card-text flex-col">
                 <h2 className="title-primary">
                     <Skeleton></Skeleton>
