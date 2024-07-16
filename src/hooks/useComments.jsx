@@ -3,7 +3,7 @@ import {
     useMutation,
     useQueryClient
 } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from './useAuth';
 
 export function useComments(
@@ -15,11 +15,11 @@ export function useComments(
 ) {
     const {
         data: comments,
+        isLoading,
         error,
         hasNextPage,
         fetchNextPage,
-        isFetchingNextPage,
-        status
+        isFetchingNextPage
     } = useInfiniteQuery({
         queryKey: [`${parentId}_comments`],
         queryFn: ({ pageParam }) => {
@@ -30,10 +30,25 @@ export function useComments(
         enabled: enabled
     });
 
-    const [commentCount, setCommentCount] = useState(count);
-
     const { encodedToken, token: currentUser } = useAuth();
     const queryClient = useQueryClient();
+
+    const [fetchedCount, setFetchedCount] = useState(
+        comments?.pages?.reduce(
+            (acc, page) => ((acc += page.results.length), 0)
+        ) || 0
+    );
+    const [totalCount, setTotalCount] = useState(count);
+    useEffect(() => {
+        if (comments && comments.pages) {
+            setFetchedCount(
+                comments.pages.reduce(
+                    (acc, page) => (acc += page.results.length),
+                    0
+                )
+            );
+        }
+    }, [comments]);
 
     const mutation = useMutation({
         mutationKey: [`${parentId}_submit_comment`],
@@ -66,7 +81,7 @@ export function useComments(
                     return newComments;
                 }
             );
-            setCommentCount((prev) => prev + 1);
+            setTotalCount((prev) => prev + 1);
         }
     });
 
@@ -76,8 +91,9 @@ export function useComments(
 
     return {
         comments,
-        commentCount,
-        status,
+        fetchedCount,
+        totalCount,
+        isLoading,
         error,
         hasNextPage,
         isFetchingNextPage,

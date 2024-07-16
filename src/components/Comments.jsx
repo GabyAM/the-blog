@@ -11,12 +11,12 @@ import { fetchPostComments, submitPostComment } from '../api/comment';
 export function Comments({ postId, count }) {
     const {
         comments,
-        commentCount,
+        totalCount: commentCount,
+        isLoading,
         error,
         hasNextPage,
         fetchNextPage,
         isFetchingNextPage,
-        status,
         addComment
     } = useComments(postId, count, fetchPostComments, submitPostComment);
 
@@ -42,7 +42,7 @@ export function Comments({ postId, count }) {
 
     return (
         <div className="comment-section flex-col">
-            {status !== 'pending' && (
+            {!isLoading && (
                 <div>
                     <h2
                         className={`main-comment-form-title ${encodedToken === null ? 'disabled' : ''}`}
@@ -57,7 +57,7 @@ export function Comments({ postId, count }) {
                 </div>
             )}
             <div>
-                {status === 'pending' ? (
+                {isLoading ? (
                     <>
                         <CommentSkeleton></CommentSkeleton>
                         <CommentSkeleton></CommentSkeleton>

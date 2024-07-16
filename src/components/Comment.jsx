@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../styles/comment.css';
 import { Link } from 'react-router-dom';
 import { CommentForm } from './CommentForm';
@@ -18,7 +18,8 @@ export function Comment({ comment, depth = 1 }) {
     const shouldFetchComments = depth < 3 && comment.comments.length > 0;
     const {
         comments,
-        status,
+        fetchedCount: commentCount,
+        isLoading,
         error,
         hasNextPage,
         fetchNextPage,
@@ -64,13 +65,16 @@ export function Comment({ comment, depth = 1 }) {
         };
     }, [fetchNextPage, commentRef, comment._id, shouldFetchComments]);
 
+    if (error) return <p>oops</p>;
+
     const isDeleted = comment.user === null;
-    const hasMoreReplies = depth % 3 === 0 && comment.comments.length > 0;
+    const hasMoreReplies =
+        depth % 3 === 0 && comment.comments.length > commentCount;
     return (
         <div
             className={
                 'comment-container flex-col' +
-                (comment.comments.length > 0 ? ' parent-comment' : '')
+                (commentCount > 0 ? ' parent-comment' : '')
             }
         >
             <div
