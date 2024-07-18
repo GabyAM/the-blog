@@ -29,25 +29,45 @@ export function CommentDetail() {
                 <div className="container comment-detail-container flex-col">
                     <div className="small-post-card">
                         <div className="image-container">
-                            <img
-                                src={
-                                    comment.post.image ===
-                                    '/images/post_thumbnail_placeholder.png'
-                                        ? '/post_thumbnail_placeholder.png'
-                                        : `http://localhost:3000${comment.post.image}`
-                                }
-                            ></img>
+                            {comment?.post?.image ? (
+                                <img
+                                    src={
+                                        comment.post.image ===
+                                        '/images/post_thumbnail_placeholder.png'
+                                            ? '/post_thumbnail_placeholder.png'
+                                            : `http://localhost:3000${comment.post.image}`
+                                    }
+                                ></img>
+                            ) : (
+                                <Skeleton
+                                    width="100%"
+                                    height="100%"
+                                    borderRadius="var(--space-200)"
+                                ></Skeleton>
+                            )}
                         </div>
                         <div className="text-section flex-col">
                             <h2 className="title-primary">
-                                {comment.post.title}
+                                {comment?.post?.title || (
+                                    <Skeleton width="60%"></Skeleton>
+                                )}
                             </h2>
-                            <p>{comment.post.summary}</p>
+                            <p>
+                                {comment?.post?.summary || (
+                                    <Skeleton count={2} width="90%"></Skeleton>
+                                )}
+                            </p>
                         </div>
                     </div>
+
                     <div className="horizontal-separator"></div>
+
                     <div className="comments flex-col">
-                        <Comment comment={comment}></Comment>
+                        {isLoading ? (
+                            <CommentSkeleton></CommentSkeleton>
+                        ) : (
+                            <Comment comment={comment}></Comment>
+                        )}
                     </div>
                 </div>
             )}

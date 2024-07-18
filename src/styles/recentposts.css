@@ -20,8 +20,13 @@
 .recent-post {
     display: grid;
     grid-template-columns: 1fr 2.2fr;
-    flex-direction: row;
     gap: var(--space-600);
+}
+
+.recent-posts-section,
+.recent-posts,
+.recent-post {
+    width: 100%;
 }
 
 .recent-post .post-text {
@@ -49,6 +54,7 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 6;
+    line-clamp: 6;
     overflow: hidden;
     font-size: 16px;
     font-weight: 500;

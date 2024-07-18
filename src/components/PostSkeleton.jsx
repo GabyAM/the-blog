@@ -1,6 +1,5 @@
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { CommentSkeleton } from './CommentSkeleton';
 
 export function PostSkeleton() {
     return (
@@ -17,13 +16,6 @@ export function PostSkeleton() {
                         <Skeleton count={10}></Skeleton>
                     </p>
                 </div>
-            </div>
-            <div className="horizontal-separator"></div>
-            <div className="container flex-col">
-                <CommentSkeleton></CommentSkeleton>
-                <CommentSkeleton></CommentSkeleton>
-                <CommentSkeleton></CommentSkeleton>
-                <CommentSkeleton></CommentSkeleton>
             </div>
         </>
     );

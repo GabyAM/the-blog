@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import '../styles/recentposts.css';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { RecentPostSkeleton } from './RecentPostSkeleton';
 import { SectionError } from './SectionError';
 
 export function RecentPosts() {
@@ -24,15 +25,17 @@ export function RecentPosts() {
         queryKey: ['landing_recent_posts'],
         queryFn: fetchRecentPosts
     });
-
-    if (isLoading) {
-        return <p> loading recent posts...</p>;
-    }
     return (
         <div className="recent-posts-section">
             <h2>Recent posts</h2>
             <div className="recent-posts">
-                {error ? (
+                {isLoading ? (
+                    <>
+                        <RecentPostSkeleton></RecentPostSkeleton>
+                        <RecentPostSkeleton></RecentPostSkeleton>
+                        <RecentPostSkeleton></RecentPostSkeleton>
+                    </>
+                ) : error ? (
                     <SectionError></SectionError>
                 ) : (
                     posts.map((post, index) => (

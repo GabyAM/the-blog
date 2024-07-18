@@ -22,7 +22,7 @@ export function SavedPost({ post, onUnsave }) {
                 <h3>
                     <Link to={`/post/${post._id}`}>{post.title}</Link>
                 </h3>
-                <span>
+                <span className="info-span">
                     By{' '}
                     <Link to={`/user/${post.author._id}`}>
                         {post.author.name}
