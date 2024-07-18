@@ -45,7 +45,11 @@ export function Comment({ comment, depth = 1 }) {
     useEffect(() => {
         const observer = new IntersectionObserver(
             (entries) => {
-                if (entries[0].isIntersecting && shouldFetchComments) {
+                if (
+                    entries[0].isIntersecting &&
+                    shouldFetchComments &&
+                    !comments
+                ) {
                     fetchNextPage();
                     console.log('bottom!');
                 }
@@ -64,8 +68,7 @@ export function Comment({ comment, depth = 1 }) {
                 observer.unobserve(refValue);
             }
         };
-    }, [fetchNextPage, commentRef, comment._id, shouldFetchComments]);
-
+    }, [fetchNextPage, commentRef, comment._id, shouldFetchComments, comments]);
 
     const isDeleted = comment.user === null;
     const hasMoreReplies =
@@ -158,7 +161,7 @@ export function Comment({ comment, depth = 1 }) {
                     )}
                 </div>
             )}
-            {isFetchingNextPage && comment.comments.length > 0 && (
+            {isLoading && comment.comments.length > 0 && (
                 <>
                     <CommentSkeleton></CommentSkeleton>
                     <CommentSkeleton></CommentSkeleton>
@@ -184,7 +187,27 @@ export function Comment({ comment, depth = 1 }) {
                                 );
                         })}
                     </React.Fragment>
-                ))}
+                ))
+            )}
+            {isFetchingNextPage && (
+                <>
+                    <CommentSkeleton></CommentSkeleton>
+                    <CommentSkeleton></CommentSkeleton>
+                    <CommentSkeleton></CommentSkeleton>
+                </>
+            )}
+            {depth < 3 && hasNextPage && (
+                <button
+                    className="more-replies-button"
+                    onClick={() => {
+                        if (!isFetchingNextPage) {
+                            fetchNextPage();
+                        }
+                    }}
+                >
+                    More replies
+                </button>
+            )}
             <div className="bottom-marker" ref={commentRef}></div>
         </div>
     );

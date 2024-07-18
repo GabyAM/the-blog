@@ -48,11 +48,13 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
+    line-clamp: 4;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.toggle-comment-length {
+.toggle-comment-length,
+.more-replies-button {
     background: none;
     border: none;
     width: fit-content;
@@ -60,7 +62,11 @@
     color: var(--green-700);
 }
 
-.comment-container .comment-container {
+.more-replies-button {
+    font-size: 1em;
+}
+
+.comment-container > *:not(.comment) {
     margin-left: var(--space-600);
 }
 
