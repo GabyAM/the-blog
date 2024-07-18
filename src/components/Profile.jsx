@@ -10,6 +10,9 @@ import toast from 'react-hot-toast';
 import { SavedPosts } from './SavedPosts';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchUser, submitUserEdit } from '../api/user';
+import { PageError } from './PageError';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 export function Profile() {
     const { id } = useParams();
@@ -58,59 +61,72 @@ export function Profile() {
     return (
         <>
             <Header></Header>
-            {!isLoading && user && (
-                <div className="container profile-container">
-                    <div className="profile-card flex-col grey-card">
-                        {isEditing ? (
-                            <ProfileForm
-                                onCancel={() => setIsEditing(false)}
-                                onSubmit={handleEditUser}
-                                user={user}
-                            ></ProfileForm>
-                        ) : (
-                            <>
-                                <div className="main-section flex-row">
-                                    <div className="image-container">
-                                        <img
-                                            src={`http://localhost:3000${user.image}`}
-                                        ></img>
+            {isLoading ? (
+                <ProfileCardSkeleton></ProfileCardSkeleton>
+            ) : error ? (
+                <PageError error={error}></PageError>
+            ) : (
+                user && (
+                    <div className="container profile-container">
+                        <div className="profile-card flex-col grey-card">
+                            {isEditing ? (
+                                <ProfileForm
+                                    onCancel={() => setIsEditing(false)}
+                                    onSubmit={handleEditUser}
+                                    user={user}
+                                ></ProfileForm>
+                            ) : (
+                                <>
+                                    <div className="main-section flex-row">
+                                        <div className="image-container">
+                                            {user?.image ? (
+                                                <img
+                                                    src={`http://localhost:3000${user.image}`}
+                                                ></img>
+                                            ) : (
+                                                <Skeleton
+                                                    width="100%"
+                                                    height="100%"
+                                                ></Skeleton>
+                                            )}
+                                        </div>
+                                        <div className="profile-user-info flex-col">
+                                            <span className="user-name">
+                                                {user.name}
+                                            </span>
+                                            <span className="user-email">
+                                                {user.email}
+                                            </span>
+                                            {isOwnProfile && (
+                                                <button
+                                                    onClick={() =>
+                                                        setIsEditing(true)
+                                                    }
+                                                    className="secondary-button rounded medium profile-edit-button flex-row"
+                                                >
+                                                    <EditIcon
+                                                        width="1em"
+                                                        height="1em"
+                                                    ></EditIcon>
+                                                    <span>Edit</span>
+                                                </button>
+                                            )}
+                                        </div>
                                     </div>
-                                    <div className="profile-user-info flex-col">
-                                        <span className="user-name">
-                                            {user.name}
-                                        </span>
-                                        <span className="user-email">
-                                            {user.email}
-                                        </span>
-                                        {isOwnProfile && (
-                                            <button
-                                                onClick={() =>
-                                                    setIsEditing(true)
-                                                }
-                                                className="secondary-button rounded medium profile-edit-button flex-row"
-                                            >
-                                                <EditIcon
-                                                    width="1em"
-                                                    height="1em"
-                                                ></EditIcon>
-                                                <span>Edit</span>
-                                            </button>
-                                        )}
-                                    </div>
-                                </div>
-                                {isOwnProfile && savedPosts.length > 0 && (
-                                    <>
-                                        <div className="horizontal-separator"></div>
-                                        <SavedPosts
-                                            posts={savedPosts}
-                                            setPosts={setSavedPosts}
-                                        ></SavedPosts>
-                                    </>
-                                )}
-                            </>
-                        )}
+                                    {isOwnProfile && savedPosts.length > 0 && (
+                                        <>
+                                            <div className="horizontal-separator"></div>
+                                            <SavedPosts
+                                                posts={savedPosts}
+                                                setPosts={setSavedPosts}
+                                            ></SavedPosts>
+                                        </>
+                                    )}
+                                </>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )
             )}
         </>
     );

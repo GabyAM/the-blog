@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import '../styles/recentposts.css';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
+import { SectionError } from './SectionError';
 
 export function RecentPosts() {
     function fetchRecentPosts() {
@@ -27,44 +28,45 @@ export function RecentPosts() {
     if (isLoading) {
         return <p> loading recent posts...</p>;
     }
-    if (error) {
-        return <p>{error.message}</p>;
-    }
     return (
         <div className="recent-posts-section">
             <h2>Recent posts</h2>
             <div className="recent-posts">
-                {posts.map((post, index) => (
-                    <React.Fragment key={post._id}>
-                        <div
-                            className={`recent-post variant-${Math.floor(Math.random() * 3) + 1}`}
-                        >
-                            <Link to={`/post/${post._id}`}>
-                                <div className="image-container">
-                                    <img
-                                        src={
-                                            post.image ===
-                                            '/images/post_thumbnail_placeholder.png'
-                                                ? '/post_thumbnail_placeholder.png'
-                                                : `http://localhost:3000${post.image}`
-                                        }
-                                    ></img>
-                                </div>
-                            </Link>
-                            <div className="post-text flex-col">
+                {error ? (
+                    <SectionError></SectionError>
+                ) : (
+                    posts.map((post, index) => (
+                        <React.Fragment key={post._id}>
+                            <div
+                                className={`recent-post variant-${Math.floor(Math.random() * 3) + 1}`}
+                            >
                                 <Link to={`/post/${post._id}`}>
-                                    <h3 className="title-primary">
-                                        {post.title}
-                                    </h3>
+                                    <div className="image-container">
+                                        <img
+                                            src={
+                                                post.image ===
+                                                '/images/post_thumbnail_placeholder.png'
+                                                    ? '/post_thumbnail_placeholder.png'
+                                                    : `http://localhost:3000${post.image}`
+                                            }
+                                        ></img>
+                                    </div>
                                 </Link>
-                                <p>{post.summary}</p>
+                                <div className="post-text flex-col">
+                                    <Link to={`/post/${post._id}`}>
+                                        <h3 className="title-primary">
+                                            {post.title}
+                                        </h3>
+                                    </Link>
+                                    <p>{post.summary}</p>
+                                </div>
                             </div>
-                        </div>
-                        {index < posts.length - 1 && (
-                            <div className="horizontal-separator"></div>
-                        )}
-                    </React.Fragment>
-                ))}
+                            {index < posts.length - 1 && (
+                                <div className="horizontal-separator"></div>
+                            )}
+                        </React.Fragment>
+                    ))
+                )}
                 <Link to={'/posts'} className="posts-link">
                     <button className="large outlined-button-900 rounded">
                         See all posts

@@ -7,7 +7,7 @@ export function submitLogin(formData) {
         body: JSON.stringify(formData),
         credentials: 'include'
     }).then((res) => {
-        if (!res.ok && res.status === 500) {
+        if (!res.ok && res.status !== 400) {
             throw new Error('');
         }
         return res.json();

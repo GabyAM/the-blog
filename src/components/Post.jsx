@@ -14,6 +14,7 @@ import {
     submitSavePost,
     submitUnsavePost
 } from '../api/post';
+import { PageError } from './PageError';
 
 export function Post() {
     const { id } = useParams();
@@ -63,76 +64,73 @@ export function Post() {
     return (
         <>
             <Header></Header>
-            {error ? (
-                <>
-                    <h1> Oops</h1>
-                    <p>
-                        {
-                            "Couldn't find the resource or doesn't exist (error screen to be implemented)"
-                        }
-                    </p>
-                </>
-            ) : isLoading ? (
+            {isLoading ? (
                 <PostSkeleton></PostSkeleton>
+            ) : error ? (
+                <PageError error={error}></PageError>
             ) : (
-                <>
-                    <div className="container post-container flex-col">
-                        <div className="post flex-col">
-                            <div className="headings flex-col">
-                                <h1 className="title-primary">{post.title}</h1>
-                                <p> {post.summary}</p>
-                            </div>
-
-                            {encodedToken && (
-                                <div>
-                                    <button
-                                        className={`secondary-button small rounded flex-row save-post-button ${isSavingOrUnsaving && 'pending'}`}
-                                        disabled={isSavingOrUnsaving}
-                                        onClick={handlePostSaveOrUnsave}
-                                    >
-                                        {isSaved ? (
-                                            <CheckedBookmarkIcon
-                                                width="1em"
-                                                height="1em"
-                                            ></CheckedBookmarkIcon>
-                                        ) : (
-                                            <UncheckedBookmarkIcon
-                                                width="1em"
-                                                height="1em"
-                                            ></UncheckedBookmarkIcon>
-                                        )}
-                                        <span>
-                                            {isSaved ? 'unsave' : 'save'}
-                                        </span>
-                                    </button>
+                post && (
+                    <>
+                        <div className="container post-container flex-col">
+                            <div className="post flex-col">
+                                <div className="headings flex-col">
+                                    <h1 className="title-primary">
+                                        {post.title}
+                                    </h1>
+                                    <p> {post.summary}</p>
                                 </div>
-                            )}
-                            <div className="image-container">
-                                <img
-                                    src={
-                                        post.image ===
-                                        '/images/post_thumbnail_placeholder.png'
-                                            ? '/post_thumbnail_placeholder.png'
-                                            : `http://localhost:3000${post.image}`
-                                    }
-                                ></img>
-                            </div>
 
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: post.text
-                                }}
-                            ></div>
+                                {encodedToken && (
+                                    <div>
+                                        <button
+                                            className={`secondary-button small rounded flex-row save-post-button ${isSavingOrUnsaving && 'pending'}`}
+                                            disabled={isSavingOrUnsaving}
+                                            onClick={handlePostSaveOrUnsave}
+                                        >
+                                            {isSaved ? (
+                                                <CheckedBookmarkIcon
+                                                    width="1em"
+                                                    height="1em"
+                                                ></CheckedBookmarkIcon>
+                                            ) : (
+                                                <UncheckedBookmarkIcon
+                                                    width="1em"
+                                                    height="1em"
+                                                ></UncheckedBookmarkIcon>
+                                            )}
+                                            <span>
+                                                {isSaved ? 'unsave' : 'save'}
+                                            </span>
+                                        </button>
+                                    </div>
+                                )}
+                                <div className="image-container">
+                                    <img
+                                        src={
+                                            post.image ===
+                                            '/images/post_thumbnail_placeholder.png'
+                                                ? '/post_thumbnail_placeholder.png'
+                                                : `http://localhost:3000${post.image}`
+                                        }
+                                    ></img>
+                                </div>
+
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: post.text
+                                    }}
+                                ></div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="horizontal-separator"></div>
-                    <div className="container flex-col">
-                        <Comments
-                            postId={id}
-                            count={post.comment_count}
-                        ></Comments>
-                    </div>
-                </>
+                        <div className="horizontal-separator"></div>
+                        <div className="container flex-col">
+                            <Comments
+                                postId={id}
+                                count={post.comment_count}
+                            ></Comments>
+                        </div>
+                    </>
+                )
             )}
         </>
     );

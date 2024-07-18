@@ -1,0 +1,29 @@
+.error-card {
+    border: 1px solid var(--grey-100);
+    border-radius: var(--space-300);
+    color: var(--grey-900);
+    width: 100%;
+}
+.error-card.large {
+    max-width: 1000px;
+    padding: var(--space-500) var(--space-800);
+}
+.error-card.medium {
+    max-width: 500px;
+    padding: var(--space-300) var(--space-600);
+}
+
+.error-card div {
+    align-items: center;
+    gap: var(--space-200);
+}
+
+.error-card p {
+    height: fit-content;
+}
+.error-card.large p {
+    font-size: 20px;
+}
+.error-card.medium p {
+    font-size: 14px;
+}

@@ -7,6 +7,7 @@ import { RepliesIcon, ReplyIcon } from './Icons';
 import { CommentSkeleton } from './CommentSkeleton';
 import { fetchCommentReplies, submitCommentReply } from '../api/comment';
 import { useComments } from '../hooks/useComments';
+import { SectionError } from './SectionError';
 
 export function Comment({ comment, depth = 1 }) {
     const { encodedToken: token, token: currentUser } = useAuth();
@@ -65,7 +66,6 @@ export function Comment({ comment, depth = 1 }) {
         };
     }, [fetchNextPage, commentRef, comment._id, shouldFetchComments]);
 
-    if (error) return <p>oops</p>;
 
     const isDeleted = comment.user === null;
     const hasMoreReplies =
@@ -165,7 +165,12 @@ export function Comment({ comment, depth = 1 }) {
                     <CommentSkeleton></CommentSkeleton>
                 </>
             )}
-            {comments &&
+            {error ? (
+                <div className="comment-container">
+                    <SectionError size="medium"></SectionError>
+                </div>
+            ) : (
+                comments &&
                 comments.pages.map((page, index) => (
                     <React.Fragment key={index}>
                         {page.results.map((reply) => {

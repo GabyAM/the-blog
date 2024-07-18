@@ -1,7 +1,9 @@
+import { ServerError } from '../utils/error';
+
 export function fetchPost(id) {
     return fetch(`http://localhost:3000/post/${id}`).then((res) => {
         if (!res.ok) {
-            throw new Error('Error while fetching post');
+            throw new ServerError('failed at fetching post', res.status);
         }
         return res.json();
     });
@@ -13,7 +15,7 @@ export function fetchPosts(pageParam) {
         url += `&lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
     return fetch(url).then((res) => {
         if (!res.ok) {
-            throw new Error('');
+            throw new ServerError('failed at fetching posts', res.status);
         }
         return res.json();
     });
@@ -23,7 +25,10 @@ export function fetchRecentPosts() {
     return fetch('http://localhost:3000/posts?is_published=true&limit=3')
         .then((res) => {
             if (!res.ok) {
-                throw new Error('asnfpasf');
+                throw new ServerError(
+                    'Failed to fetch recent posts',
+                    res.status
+                );
             }
             return res.json();
         })
@@ -35,6 +40,9 @@ export function fetchIsPostSaved(postId, token) {
         credentials: 'include',
         headers: { Authorization: `bearer ${token}` }
     }).then((res) => {
+        if (!res.ok) {
+            throw new ServerError('Failed to fetch post status', res.status);
+        }
         return res.json();
     });
 }
@@ -48,7 +56,7 @@ function submitSaveOrUnsavePost(postId, action, token) {
         }
     }).then((res) => {
         if (!res.ok) {
-            throw new Error('');
+            throw new ServerError(`Failed to ${action} post`, res.status);
         }
         return res.json();
     });

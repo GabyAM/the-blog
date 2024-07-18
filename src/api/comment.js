@@ -1,29 +1,30 @@
-export function fetchPostComments(pageParam, postId) {
-    let url = `http://localhost:3000/post/${postId}/comments`;
-    if (pageParam)
-        url += `?lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
-    return fetch(url).then((res) => res.json());
-}
+import { ServerError } from '../utils/error';
 
 export function fetchComment(id) {
     return fetch(`http://localhost:3000/comment/${id}`).then((res) => {
         if (!res.ok) {
-            throw new Error('');
+            throw new ServerError('Failed to fetch comment', res.status);
         }
         return res.json();
     });
 }
 
-export function fetchCommentReplies(pageParam, commentId) {
-    let url = `http://localhost:3000/comment/${commentId}/comments`;
+function fetchComments(pageParam, parentType, parentId) {
+    let url = `http://localhost:3000/${parentType}/${parentId}/comments`;
     if (pageParam)
         url += `?lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
     return fetch(url).then((res) => {
         if (!res.ok) {
-            throw new Error('');
+            throw new ServerError('Failed to fetch comments', res.status);
         }
         return res.json();
     });
+}
+export function fetchCommentReplies(pageParam, commentId) {
+    return fetchComments(pageParam, 'comment', commentId);
+}
+export function fetchPostComments(pageParam, postId) {
+    return fetchComments(pageParam, 'post', postId);
 }
 
 function submitComment(formData, parentId, token, type) {

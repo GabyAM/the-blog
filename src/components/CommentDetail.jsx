@@ -1,40 +1,31 @@
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
 import { Header } from './Header';
 import { Comment } from './Comment';
-import { useAuth } from '../hooks/useAuth';
 import '../styles/commentdetail.css';
-import {
-    useInfiniteQuery,
-    useQuery,
-    useQueryClient
-} from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
+import { CommentSkeleton } from './CommentSkeleton';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { PageError } from './PageError';
+import { fetchComment } from '../api/comment';
 
 export function CommentDetail() {
     const { id } = useParams();
 
-    const { token: currentUser, encodedToken } = useAuth();
-
-    function fetchComment() {
-        return fetch(`http://localhost:3000/comment/${id}`).then((res) => {
-            if (!res.ok) {
-                throw new Error('');
-            }
-            return res.json();
-        });
-    }
     const {
         data: comment,
         isLoading,
-        isError
+        error
     } = useQuery({
-        queryKey: [`comment_${id}`],
-        queryFn: fetchComment
+        queryKey: ['comment', id],
+        queryFn: () => fetchComment(id)
     });
     return (
         <>
             <Header></Header>
-            {!isLoading && !isError && (
+            {error ? (
+                <PageError error={error}></PageError>
+            ) : (
                 <div className="container comment-detail-container flex-col">
                     <div className="small-post-card">
                         <div className="image-container">
