@@ -8,12 +8,14 @@ import { SignupForm } from './components/SignupForm';
 import { Profile } from './components/Profile';
 import { CommentDetail } from './components/CommentDetail';
 import { ResetScroll } from './components/ResetScroll';
+import { ErrorCatcher } from './components/ErrorCatcher';
 
 export function Router() {
     const router = createBrowserRouter([
         {
             path: '/',
             element: <ResetScroll></ResetScroll>,
+            errorElement: <ErrorCatcher></ErrorCatcher>,
             children: [
                 {
                     path: '/',
