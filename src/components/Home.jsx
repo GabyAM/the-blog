@@ -1,13 +1,20 @@
 import '../styles/home.css';
 import { Link } from 'react-router-dom';
 import { RecentPosts } from './RecentPosts';
+import { useAuth } from '../hooks/useAuth';
 
 export function Home() {
+    const { token: currentUser } = useAuth();
     return (
         <>
             <div className="hero flex-col">
                 <div className="container flex-col">
-                    <a href="/login">Login</a>
+                    <Link
+                        to={currentUser ? `/user/${currentUser.id}` : '/login'}
+                    >
+                        {currentUser ? 'Your profile' : 'Login'}
+                    </Link>
+
                     <div className="hero-main-content flex-col">
                         <div className="hero-text flex-col">
                             <div className="logo">

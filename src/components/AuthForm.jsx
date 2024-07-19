@@ -27,7 +27,7 @@ export function AuthForm({ onSubmit, onSuccess, buttonText, children }) {
             .catch((e) => {
                 setError('root.serverError', {
                     type: 'server',
-                    message: 'too bad!'
+                    message: 'An unexpected error happened.'
                 });
             });
     }

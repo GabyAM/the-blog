@@ -4,7 +4,8 @@ import { useAuth } from '../hooks/useAuth';
 
 export function AuthLayout() {
     const location = useLocation();
-    const { token } = useAuth();
+    const { token, loading } = useAuth();
+    if (loading) return;
     if (token) {
         return <Navigate to="/posts"></Navigate>;
     }

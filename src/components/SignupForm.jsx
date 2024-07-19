@@ -49,7 +49,7 @@ export function SignupForm() {
             <AuthFormInput
                 type="password"
                 name="password-confirm"
-                label="Password"
+                label="Confirm password"
                 rules={{
                     required: 'Password confirm is required'
                 }}

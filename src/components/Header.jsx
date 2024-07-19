@@ -8,9 +8,9 @@ export function Header({ sticky }) {
     return (
         <header className={sticky ? 'sticky' : ''}>
             <div className="container">
-                <div className="logo flex-row">
+                <Link to="/" className="logo flex-row">
                     <img src="/logo_alternative.png"></img>
-                </div>
+                </Link>
                 <ul className="header-links flex-row">
                     <li>
                         <a className="header-main-link" href="/">
