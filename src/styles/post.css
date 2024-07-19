@@ -22,6 +22,16 @@
     font-size: 20px;
 }
 
+.save-post-button {
+    margin: 0 0 0 auto;
+    align-items: center;
+    gap: var(--space-100);
+    transition: opacity 0.3s ease;
+}
+.save-post-button.pending {
+    opacity: 0.3;
+}
+
 .post .image-container {
     width: 100%;
     aspect-ratio: 1.9/1;

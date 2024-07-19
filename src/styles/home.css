@@ -57,6 +57,7 @@ main > p {
 }
 
 footer {
+    flex-grow: 1;
     background: linear-gradient(
         to bottom,
         var(--green-900),

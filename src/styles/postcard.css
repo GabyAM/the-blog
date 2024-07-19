@@ -1,9 +1,4 @@
 .post-card {
-    border: 1px solid var(--dark-grey);
-    border-radius: var(--space-200);
-    padding: var(--space-600) var(--space-400);
-    box-shadow: 6px 6px 0 var(--main-grey);
-
     display: grid;
     grid-template-columns: 0.6fr 0.4fr;
     gap: var(--space-500);
@@ -35,7 +30,13 @@
     margin-top: auto;
 }
 
-.image-container {
+.post-card .image-container {
     align-self: center;
     aspect-ratio: 1/1;
+    border-radius: var(--space-300);
+}
+
+.post-card .image-container img {
+    object-fit: cover;
+    border-radius: var(--space-300);
 }

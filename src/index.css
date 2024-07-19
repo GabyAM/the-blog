@@ -84,6 +84,18 @@ a {
     padding: var(--space-600) var(--space-400);
     box-shadow: 6px 6px 0 var(--grey-100);
 }
+
+.single-icon-container {
+    background: none;
+    border: none;
+    aspect-ratio: 1/1;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
 .primary-button {
     background-color: var(--green-400);
     color: white;
@@ -97,7 +109,7 @@ a {
 }
 
 .tertiary-button {
-    background-color: var(--main-grey);
+    background-color: var(--grey-100);
     color: var(--green-900);
     border: none;
 }
@@ -136,6 +148,13 @@ a {
     font-size: 24px;
     font-weight: 500;
     padding: 0 1em;
+    width: fit-content;
+}
+
+.large {
+    font-size: 32px;
+    font-weight: 600;
+    padding: 0.25em 1.5em;
     width: fit-content;
 }
 
