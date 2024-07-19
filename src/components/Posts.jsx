@@ -6,6 +6,8 @@ import { PostCardSkeleton } from './PostCardSkeleton';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { fetchPosts } from '../api/post';
 import { PageError } from './PageError';
+import he from 'he';
+import { mapPagesResults } from '../utils/map';
 
 export function Posts() {
     const {
@@ -21,7 +23,17 @@ export function Posts() {
         initialPageParam: null,
         getNextPageParam: (lastPage) => {
             return lastPage.metadata.nextPageParams;
-        }
+        },
+        select: (posts) =>
+            mapPagesResults(posts, (post) => ({
+                ...post,
+                title: he.unescape(post.title),
+                summary: he.unescape(post.summary),
+                author: {
+                    ...post.author,
+                    name: he.unescape(post.author.name)
+                }
+            }))
     });
     useEffect(() => {
         function handleScroll() {

@@ -13,6 +13,7 @@ import { fetchUser, submitUserEdit } from '../api/user';
 import { PageError } from './PageError';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
+import he from 'he';
 
 export function Profile() {
     const { id } = useParams();
@@ -25,7 +26,17 @@ export function Profile() {
     } = useQuery({
         queryKey: [`user_${id}`],
         queryFn: () => fetchUser(id, encodedToken),
-        enabled: !loading
+        enabled: !loading,
+        select: (user) => ({
+            ...user,
+            name: he.unescape(user.name),
+            email: he.unescape(user.email),
+            saved_posts: user.saved_posts.map((post) => ({
+                ...post,
+                title: he.unescape(post.title),
+                author: { ...post.author, name: he.unescape(post.author.name) }
+            }))
+        })
     });
 
     const [savedPosts, setSavedPosts] = useState([]);

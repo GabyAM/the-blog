@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { RecentPostSkeleton } from './RecentPostSkeleton';
 import { SectionError } from './SectionError';
+import he from 'he';
 
 export function RecentPosts() {
     function fetchRecentPosts() {
@@ -23,7 +24,13 @@ export function RecentPosts() {
         error
     } = useQuery({
         queryKey: ['landing_recent_posts'],
-        queryFn: fetchRecentPosts
+        queryFn: fetchRecentPosts,
+        select: (posts) =>
+            posts.map((post) => ({
+                ...post,
+                title: he.unescape(post.title),
+                summary: he.unescape(post.summary)
+            }))
     });
     return (
         <div className="recent-posts-section">

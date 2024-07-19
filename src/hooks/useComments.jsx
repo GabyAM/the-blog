@@ -5,6 +5,8 @@ import {
 } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { useAuth } from './useAuth';
+import { mapPagesResults } from '../utils/map';
+import he from 'he';
 
 export function useComments(
     parentId,
@@ -27,7 +29,15 @@ export function useComments(
         },
         initialPageParam: null,
         getNextPageParam: (lastPage) => lastPage.metadata.nextPageParams,
-        enabled: enabled
+        enabled: enabled,
+        select: (comments) =>
+            mapPagesResults(comments, (comment) => ({
+                ...comment,
+                text: he.unescape(comment.text),
+                user: comment.user
+                    ? { ...comment.user, name: he.unescape(comment.user.name) }
+                    : null
+            }))
     });
 
     const { encodedToken, token: currentUser } = useAuth();

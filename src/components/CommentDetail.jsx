@@ -8,6 +8,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { PageError } from './PageError';
 import { fetchComment } from '../api/comment';
+import he from 'he';
 
 export function CommentDetail() {
     const { id } = useParams();
@@ -18,7 +19,19 @@ export function CommentDetail() {
         error
     } = useQuery({
         queryKey: ['comment', id],
-        queryFn: () => fetchComment(id)
+        queryFn: () => fetchComment(id),
+        select: (comment) => ({
+            ...comment,
+            text: he.unescape(comment.text),
+            user: comment.user
+                ? { ...comment.user, name: he.unescape(comment.user.name) }
+                : null,
+            post: {
+                ...comment.post,
+                title: he.unescape(comment.post.title),
+                summary: he.unescape(comment.post.summary)
+            }
+        })
     });
     return (
         <>

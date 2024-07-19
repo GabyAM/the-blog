@@ -15,6 +15,7 @@ import {
     submitUnsavePost
 } from '../api/post';
 import { PageError } from './PageError';
+import he from 'he';
 
 export function Post() {
     const { id } = useParams();
@@ -27,7 +28,12 @@ export function Post() {
         error
     } = useQuery({
         queryKey: [`post_${id}`],
-        queryFn: fetchFn
+        queryFn: fetchFn,
+        select: (post) => ({
+            ...post,
+            title: he.unescape(post.title),
+            summary: he.unescape(post.summary)
+        })
     });
     const [isSaved, setIsSaved] = useState(false);
     const [isSavingOrUnsaving, setIsSavingOrUnsaving] = useState(false);
