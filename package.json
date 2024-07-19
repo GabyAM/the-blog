@@ -12,6 +12,7 @@
 	"dependencies": {
 		"@tanstack/react-query": "^5.39.0",
 		"eslint-config-prettier": "^9.1.0",
+		"he": "^1.2.0",
 		"jwt-decode": "^4.0.0",
 		"prettier": "^3.2.5",
 		"react": "^18.2.0",
