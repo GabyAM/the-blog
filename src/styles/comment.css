@@ -35,6 +35,22 @@
     border-radius: var(--space-200);
 }
 
+.comment .text .upper-section {
+    gap: var(--space-500);
+}
+
+.comment .text .upper-section .banned-label {
+    color: var(--error-red);
+    font-weight: 700;
+}
+
+.comment .text .upper-section .timestamp-label {
+    color: var(--grey-400);
+    margin-right: 0;
+    margin-left: auto;
+    font-weight: 700;
+}
+
 .comment .text {
     display: flex;
     flex-direction: column;

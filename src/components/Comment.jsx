@@ -8,6 +8,7 @@ import { CommentSkeleton } from './CommentSkeleton';
 import { fetchCommentReplies, submitCommentReply } from '../api/comment';
 import { useComments } from '../hooks/useComments';
 import { SectionError } from './SectionError';
+import { formatDateToDistance } from '../utils/date';
 
 export function Comment({ comment, depth = 1 }) {
     const { encodedToken: token, token: currentUser } = useAuth();
@@ -101,9 +102,19 @@ export function Comment({ comment, depth = 1 }) {
                             ></img>
                         </div>
                         <div ref={text} className="text">
-                            <Link to={`/user/${comment.user._id}`}>
-                                <span>{comment.user.name}</span>
-                            </Link>
+                            <div className="upper-section flex-row">
+                                <Link to={`/user/${comment.user._id}`}>
+                                    <span>{comment.user.name}</span>
+                                </Link>
+                                {comment.user.is_banned && (
+                                    <span className="banned-label">
+                                        BANNED USER
+                                    </span>
+                                )}
+                                <span className="timestamp-label">
+                                    {formatDateToDistance(comment.createdAt)}
+                                </span>
+                            </div>
                             <p
                                 className={
                                     isOverflown && textHidden ? 'overflown' : ''
