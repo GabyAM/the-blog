@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Header } from './Header';
 import '../styles/post.css';
 import { Comments } from './Comments';
@@ -32,7 +32,11 @@ export function Post() {
         select: (post) => ({
             ...post,
             title: he.unescape(post.title),
-            summary: he.unescape(post.summary)
+            summary: he.unescape(post.summary),
+            author: {
+                ...post.author,
+                name: he.unescape(post.author.name)
+            }
         })
     });
     const [isSaved, setIsSaved] = useState(false);
@@ -84,6 +88,12 @@ export function Post() {
                                         {post.title}
                                     </h1>
                                     <p> {post.summary}</p>
+                                    <span>
+                                        By{' '}
+                                        <Link to={`/user/${post.author._id}`}>
+                                            {post.author.name}
+                                        </Link>
+                                    </span>
                                 </div>
 
                                 {encodedToken && (
