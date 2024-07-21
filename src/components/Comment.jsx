@@ -96,7 +96,7 @@ export function Comment({ comment, depth = 1 }) {
                             <img
                                 src={
                                     comment.user.image === '/images/profile.png'
-                                        ? '/profile.png'
+                                        ? '/src/assets/profile.png'
                                         : `http://localhost:3000${comment.user.image}`
                                 }
                             ></img>

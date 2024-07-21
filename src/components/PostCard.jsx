@@ -27,7 +27,7 @@ export function PostCard({ id, title, author, summary, commentCount, image }) {
                     <img
                         src={
                             image === '/images/post_thumbnail_placeholder.png'
-                                ? '/post_thumbnail_placeholder.png'
+                                ? '/src/assets/post_thumbnail_placeholder.png'
                                 : `http://localhost:3000${image}`
                         }
                     ></img>

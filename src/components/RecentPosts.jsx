@@ -56,7 +56,7 @@ export function RecentPosts() {
                                             src={
                                                 post.image ===
                                                 '/images/post_thumbnail_placeholder.png'
-                                                    ? '/post_thumbnail_placeholder.png'
+                                                    ? '/src/assets/post_thumbnail_placeholder.png'
                                                     : `http://localhost:3000${post.image}`
                                             }
                                         ></img>

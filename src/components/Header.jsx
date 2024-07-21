@@ -37,7 +37,7 @@ export function Header({ sticky }) {
                                         src={
                                             currentUser.image ===
                                             '/images/profile.png'
-                                                ? '/profile.png'
+                                                ? '/src/assets/profile.png'
                                                 : `http://localhost:3000${currentUser.image}`
                                         }
                                     ></img>

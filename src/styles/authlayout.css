@@ -4,7 +4,7 @@
 }
 
 .user-form-background {
-    background-image: url('../../public/auth-form-background.png');
+    background-image: url('/src/assets/auth-form-background.png');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
