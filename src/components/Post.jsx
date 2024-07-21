@@ -96,39 +96,43 @@ export function Post() {
                                     </span>
                                 </div>
 
-                                {encodedToken && (
-                                    <div>
-                                        <button
-                                            className={`secondary-button small rounded flex-row save-post-button ${isSavingOrUnsaving && 'pending'}`}
-                                            disabled={isSavingOrUnsaving}
-                                            onClick={handlePostSaveOrUnsave}
-                                        >
-                                            {isSaved ? (
-                                                <CheckedBookmarkIcon
-                                                    width="1em"
-                                                    height="1em"
-                                                ></CheckedBookmarkIcon>
-                                            ) : (
-                                                <UncheckedBookmarkIcon
-                                                    width="1em"
-                                                    height="1em"
-                                                ></UncheckedBookmarkIcon>
-                                            )}
-                                            <span>
-                                                {isSaved ? 'unsave' : 'save'}
-                                            </span>
-                                        </button>
+                                <div className="mid-section flex-col">
+                                    {encodedToken && (
+                                        <div>
+                                            <button
+                                                className={`secondary-button small rounded flex-row save-post-button ${isSavingOrUnsaving && 'pending'}`}
+                                                disabled={isSavingOrUnsaving}
+                                                onClick={handlePostSaveOrUnsave}
+                                            >
+                                                {isSaved ? (
+                                                    <CheckedBookmarkIcon
+                                                        width="1em"
+                                                        height="1em"
+                                                    ></CheckedBookmarkIcon>
+                                                ) : (
+                                                    <UncheckedBookmarkIcon
+                                                        width="1em"
+                                                        height="1em"
+                                                    ></UncheckedBookmarkIcon>
+                                                )}
+                                                <span>
+                                                    {isSaved
+                                                        ? 'unsave'
+                                                        : 'save'}
+                                                </span>
+                                            </button>
+                                        </div>
+                                    )}
+                                    <div className="image-container">
+                                        <img
+                                            src={
+                                                post.image ===
+                                                '/images/post_thumbnail_placeholder.png'
+                                                    ? '/post_thumbnail_placeholder.png'
+                                                    : `http://localhost:3000${post.image}`
+                                            }
+                                        ></img>
                                     </div>
-                                )}
-                                <div className="image-container">
-                                    <img
-                                        src={
-                                            post.image ===
-                                            '/images/post_thumbnail_placeholder.png'
-                                                ? '/post_thumbnail_placeholder.png'
-                                                : `http://localhost:3000${post.image}`
-                                        }
-                                    ></img>
                                 </div>
 
                                 <div

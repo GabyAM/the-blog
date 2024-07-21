@@ -5,21 +5,29 @@
 .post {
     padding: var(--space-400) 0 var(--space-500);
     gap: var(--space-600);
-    max-width: 650px;
+    max-width: 600px;
     margin: 0 auto;
     width: 100%;
 }
 
-.post .headings {
-    gap: var(--space-200);
-}
 .post h1 {
     color: var(--green-900);
-    font-size: 64px;
-    font-weight: 500;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 120%;
+    margin-bottom: var(--space-300);
 }
 .post p {
     font-size: 20px;
+}
+
+.post .headings p {
+    margin-bottom: var(--space-200);
+    color: var(--grey-900);
+}
+.post .headings span a {
+    font-weight: 700;
+    color: var(--green-500);
 }
 
 .save-post-button {
@@ -27,6 +35,10 @@
     align-items: center;
     gap: var(--space-100);
     transition: opacity 0.3s ease;
+}
+
+.post .mid-section {
+    gap: var(--space-300);
 }
 .save-post-button.pending {
     opacity: 0.3;
