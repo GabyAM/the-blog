@@ -24,18 +24,23 @@ export function Profile() {
         isLoading,
         error
     } = useQuery({
-        queryKey: [`user_${id}`],
+        queryKey: ['user', id],
         queryFn: () => fetchUser(id, encodedToken),
         enabled: !loading,
         select: (user) => ({
             ...user,
             name: he.unescape(user.name),
             email: he.unescape(user.email),
-            saved_posts: user.saved_posts.map((post) => ({
-                ...post,
-                title: he.unescape(post.title),
-                author: { ...post.author, name: he.unescape(post.author.name) }
-            }))
+            saved_posts: user.saved_posts
+                ? user.saved_posts.map((post) => ({
+                      ...post,
+                      title: he.unescape(post.title),
+                      author: {
+                          ...post.author,
+                          name: he.unescape(post.author.name)
+                      }
+                  }))
+                : []
         })
     });
 
@@ -54,7 +59,7 @@ export function Profile() {
         mutationFn: (formData) => submitUserEdit(formData, id, encodedToken),
         onSuccess: (data) => {
             const user = data.user;
-            queryClient.setQueryData([`user_${id}`], () => user);
+            queryClient.setQueryData(['user', id], () => user);
         },
         onError: () => new Error("Couldn't update user"),
         onSettled: () => setIsEditing(false)

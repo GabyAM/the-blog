@@ -1,4 +1,8 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+    createBrowserRouter,
+    Navigate,
+    RouterProvider
+} from 'react-router-dom';
 import { Home } from './components/Home';
 import { Posts } from './components/Posts';
 import { Post } from './components/Post';
@@ -50,7 +54,8 @@ export function Router() {
                 {
                     path: '/comment/:id',
                     element: <CommentDetail></CommentDetail>
-                }
+                },
+                { path: '/*', element: <Navigate to="/" replace></Navigate> }
             ]
         }
     ]);

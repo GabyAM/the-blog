@@ -53,7 +53,7 @@ export function Home() {
                             <a href="https://github.com/GabyAM/odin-blog-api">
                                 <li>API</li>
                             </a>
-                            <a href="/">
+                            <a href="https://github.com/GabyAM/odin-blog-admin-dashboard">
                                 <li>Admin dashboard</li>
                             </a>
                         </ul>

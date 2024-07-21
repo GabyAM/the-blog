@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import '../styles/postcard.css';
 import { Link } from 'react-router-dom';
 
@@ -12,9 +11,12 @@ export function PostCard({ id, title, author, summary, commentCount, image }) {
                     </Link>
                     <span>
                         By{' '}
-                        <a href="#" className="author-link">
+                        <Link
+                            to={`/user/${author._id}`}
+                            className="author-link"
+                        >
                             {author.name}
-                        </a>
+                        </Link>
                     </span>
                 </div>
                 <p>{summary}</p>
