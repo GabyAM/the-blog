@@ -9,6 +9,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 import { PageError } from './PageError';
 import { fetchComment } from '../api/comment';
 import he from 'he';
+import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
 
 export function CommentDetail() {
     const { id } = useParams();
@@ -47,7 +48,7 @@ export function CommentDetail() {
                                     src={
                                         comment.post.image ===
                                         '/images/post_thumbnail_placeholder.png'
-                                            ? '/src/assets/post_thumbnail_placeholder.png'
+                                            ? postThumbnailPlaceholder
                                             : `http://localhost:3000${comment.post.image}`
                                     }
                                 ></img>

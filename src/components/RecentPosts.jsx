@@ -5,6 +5,7 @@ import React from 'react';
 import { RecentPostSkeleton } from './RecentPostSkeleton';
 import { SectionError } from './SectionError';
 import he from 'he';
+import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
 
 export function RecentPosts() {
     function fetchRecentPosts() {
@@ -56,7 +57,7 @@ export function RecentPosts() {
                                             src={
                                                 post.image ===
                                                 '/images/post_thumbnail_placeholder.png'
-                                                    ? '/src/assets/post_thumbnail_placeholder.png'
+                                                    ? postThumbnailPlaceholder
                                                     : `http://localhost:3000${post.image}`
                                             }
                                         ></img>

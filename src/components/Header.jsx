@@ -1,6 +1,7 @@
 import '../styles/header.css';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
+import avatarPlaceholder from '../assets/profile.png';
 
 export function Header({ sticky }) {
     const { token: currentUser, removeToken } = useAuth();
@@ -37,7 +38,7 @@ export function Header({ sticky }) {
                                         src={
                                             currentUser.image ===
                                             '/images/profile.png'
-                                                ? '/src/assets/profile.png'
+                                                ? avatarPlaceholder
                                                 : `http://localhost:3000${currentUser.image}`
                                         }
                                     ></img>

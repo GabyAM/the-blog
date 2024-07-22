@@ -14,6 +14,7 @@ import { PageError } from './PageError';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import he from 'he';
+import avatarPlaceholder from '../assets/profile.png';
 
 export function Profile() {
     const { id } = useParams();
@@ -97,7 +98,12 @@ export function Profile() {
                                         <div className="image-container">
                                             {user?.image ? (
                                                 <img
-                                                    src={`http://localhost:3000${user.image}`}
+                                                    src={
+                                                        user.image ===
+                                                        '/images/profile.png'
+                                                            ? avatarPlaceholder
+                                                            : `http://localhost:3000${user.image}`
+                                                    }
                                                 ></img>
                                             ) : (
                                                 <Skeleton
