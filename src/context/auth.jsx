@@ -84,19 +84,22 @@ export function AuthProvider({ children }) {
         handleTokenChange();
     }, []);
 
+    const handleRefresh = useCallback(async () => {
+        if (token) await refresh();
+    }, [token, refresh]);
+    const handleSetTimer = useCallback(() => {
+        if (!token) return;
+        const expirationTime = token.exp * 1000 - Date.now();
+        const expirationTimer = setTimeout(
+            handleRefresh,
+            expirationTime - 60000
+        ); // one minute before it expires
+        return expirationTimer;
+    }, [token, handleRefresh]);
     useEffect(() => {
-        async function handleSetTimer() {
-            if (!token) return;
-            const expirationTime = token.exp * 1000 - Date.now();
-            const expirationTimer = setTimeout(async () => {
-                await refresh();
-            }, expirationTime - 60000); // one minute before it expires
-            return expirationTimer;
-        }
-
         const timer = handleSetTimer();
         return () => clearTimeout(timer);
-    }, [token, refresh]);
+    }, [token, handleSetTimer]);
 
     const contextValue = useMemo(
         () => ({
