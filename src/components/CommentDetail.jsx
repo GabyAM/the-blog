@@ -10,6 +10,7 @@ import { PageError } from './PageError';
 import { fetchComment } from '../api/comment';
 import he from 'he';
 import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
+import API_URL from '../constants';
 
 export function CommentDetail() {
     const { id } = useParams();
@@ -49,7 +50,7 @@ export function CommentDetail() {
                                         comment.post.image ===
                                         '/images/post_thumbnail_placeholder.png'
                                             ? postThumbnailPlaceholder
-                                            : `http://localhost:3000${comment.post.image}`
+                                            : API_URL + comment.post.image
                                     }
                                 ></img>
                             ) : (

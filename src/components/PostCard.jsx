@@ -1,6 +1,7 @@
 import '../styles/postcard.css';
 import { Link } from 'react-router-dom';
 import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
+import API_URL from '../constants';
 
 export function PostCard({ id, title, author, summary, commentCount, image }) {
     return (
@@ -31,7 +32,7 @@ export function PostCard({ id, title, author, summary, commentCount, image }) {
                         src={
                             image === '/images/post_thumbnail_placeholder.png'
                                 ? postThumbnailPlaceholder
-                                : `http://localhost:3000${image}`
+                                : API_URL + image
                         }
                     ></img>
                 </div>

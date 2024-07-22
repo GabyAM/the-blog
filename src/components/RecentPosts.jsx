@@ -6,19 +6,10 @@ import { RecentPostSkeleton } from './RecentPostSkeleton';
 import { SectionError } from './SectionError';
 import he from 'he';
 import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
+import { fetchRecentPosts } from '../api/post';
+import API_URL from '../constants';
 
 export function RecentPosts() {
-    function fetchRecentPosts() {
-        return fetch('http://localhost:3000/posts?is_published=true&limit=3')
-            .then((res) => {
-                if (!res.ok) {
-                    throw new Error('asnfpasf');
-                }
-                return res.json();
-            })
-            .then((response) => response.results);
-    }
-
     const {
         data: posts,
         isLoading,
@@ -58,7 +49,7 @@ export function RecentPosts() {
                                                 post.image ===
                                                 '/images/post_thumbnail_placeholder.png'
                                                     ? postThumbnailPlaceholder
-                                                    : `http://localhost:3000${post.image}`
+                                                    : API_URL + post.image
                                             }
                                         ></img>
                                     </div>

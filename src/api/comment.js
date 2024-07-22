@@ -1,7 +1,8 @@
 import { ServerError } from '../utils/error';
+import API_URL from '../constants.js';
 
 export function fetchComment(id) {
-    return fetch(`http://localhost:3000/comment/${id}`).then((res) => {
+    return fetch(API_URL + `/comment/${id}`).then((res) => {
         if (!res.ok) {
             throw new ServerError('Failed to fetch comment', res.status);
         }
@@ -10,7 +11,7 @@ export function fetchComment(id) {
 }
 
 function fetchComments(pageParam, parentType, parentId) {
-    let url = `http://localhost:3000/${parentType}/${parentId}/comments`;
+    let url = API_URL + `/${parentType}/${parentId}/comments`;
     if (pageParam)
         url += `?lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
     return fetch(url).then((res) => {
@@ -28,7 +29,7 @@ export function fetchPostComments(pageParam, postId) {
 }
 
 function submitComment(formData, parentId, token, type) {
-    return fetch(`http://localhost:3000/${type}/${parentId}/comments`, {
+    return fetch(API_URL + `/${type}/${parentId}/comments`, {
         method: 'POST',
         credentials: 'include',
         headers: {

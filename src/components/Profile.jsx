@@ -15,6 +15,7 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import he from 'he';
 import avatarPlaceholder from '../assets/profile.png';
+import API_URL from '../constants';
 
 export function Profile() {
     const { id } = useParams();
@@ -102,7 +103,8 @@ export function Profile() {
                                                         user.image ===
                                                         '/images/profile.png'
                                                             ? avatarPlaceholder
-                                                            : `http://localhost:3000${user.image}`
+                                                            : API_URL +
+                                                              user.image
                                                     }
                                                 ></img>
                                             ) : (

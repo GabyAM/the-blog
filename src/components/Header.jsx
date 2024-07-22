@@ -2,6 +2,7 @@ import '../styles/header.css';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import avatarPlaceholder from '../assets/profile.png';
+import API_URL from '../constants';
 
 export function Header({ sticky }) {
     const { token: currentUser, removeToken } = useAuth();
@@ -39,7 +40,7 @@ export function Header({ sticky }) {
                                             currentUser.image ===
                                             '/images/profile.png'
                                                 ? avatarPlaceholder
-                                                : `http://localhost:3000${currentUser.image}`
+                                                : API_URL + currentUser.image
                                         }
                                     ></img>
                                 </div>

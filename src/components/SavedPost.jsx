@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { CheckedBookmarkIcon, UncheckedBookmarkIcon } from './Icons';
 import { Link } from 'react-router-dom';
 import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
+import API_URL from '../constants';
 
 export function SavedPost({ post, onUnsave }) {
     const [isHoveringButton, setIsHoveringButton] = useState(false);
@@ -14,7 +15,7 @@ export function SavedPost({ post, onUnsave }) {
                             post.image ===
                             '/images/post_thumbnail_placeholder.png'
                                 ? postThumbnailPlaceholder
-                                : `http://localhost:3000${post.image}`
+                                : API_URL + post.image
                         }
                     ></img>
                 </Link>

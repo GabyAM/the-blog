@@ -10,6 +10,7 @@ import { useComments } from '../hooks/useComments';
 import { SectionError } from './SectionError';
 import { formatDateToDistance } from '../utils/date';
 import avatarPlaceholder from '../assets/profile.png';
+import API_URL from '../constants';
 
 export function Comment({ comment, depth = 1 }) {
     const { encodedToken: token, token: currentUser } = useAuth();
@@ -98,7 +99,7 @@ export function Comment({ comment, depth = 1 }) {
                                 src={
                                     comment.user.image === '/images/profile.png'
                                         ? avatarPlaceholder
-                                        : `http://localhost:3000${comment.user.image}`
+                                        : API_URL + comment.user.image
                                 }
                             ></img>
                         </div>

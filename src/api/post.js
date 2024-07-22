@@ -1,7 +1,8 @@
 import { ServerError } from '../utils/error';
+import API_URL from '../constants.js';
 
 export function fetchPost(id) {
-    return fetch(`http://localhost:3000/post/${id}`).then((res) => {
+    return fetch(API_URL + `/post/${id}`).then((res) => {
         if (!res.ok) {
             throw new ServerError('failed at fetching post', res.status);
         }
@@ -10,7 +11,7 @@ export function fetchPost(id) {
 }
 
 export function fetchPosts(pageParam) {
-    let url = 'http://localhost:3000/posts?is_published=true';
+    let url = API_URL + '/posts?is_published=true';
     if (pageParam)
         url += `&lastId=${pageParam._id}&lastCreatedAt=${pageParam.createdAt}`;
     return fetch(url).then((res) => {
@@ -22,7 +23,7 @@ export function fetchPosts(pageParam) {
 }
 
 export function fetchRecentPosts() {
-    return fetch('http://localhost:3000/posts?is_published=true&limit=3')
+    return fetch(API_URL + '/posts?is_published=true&limit=3')
         .then((res) => {
             if (!res.ok) {
                 throw new ServerError(
@@ -36,7 +37,7 @@ export function fetchRecentPosts() {
 }
 
 export function fetchIsPostSaved(postId, token) {
-    return fetch(`http://localhost:3000/post/${postId}/saved`, {
+    return fetch(API_URL + `/post/${postId}/saved`, {
         credentials: 'include',
         headers: { Authorization: `bearer ${token}` }
     }).then((res) => {
@@ -48,7 +49,7 @@ export function fetchIsPostSaved(postId, token) {
 }
 
 function submitSaveOrUnsavePost(postId, action, token) {
-    return fetch(`http://localhost:3000/post/${postId}/${action}`, {
+    return fetch(API_URL + `/post/${postId}/${action}`, {
         method: 'POST',
         credentials: 'include',
         headers: {

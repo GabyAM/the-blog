@@ -1,5 +1,7 @@
+import API_URL from '../constants.js';
+
 export function submitLogin(formData) {
-    return fetch('http://localhost:3000/login', {
+    return fetch(API_URL + '/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -15,7 +17,7 @@ export function submitLogin(formData) {
 }
 
 export function submitSignup(formData, token) {
-    return fetch(`http://localhost:3000/user`, {
+    return fetch(API_URL + '/user', {
         method: 'POST',
         credentials: 'include',
         headers: {
