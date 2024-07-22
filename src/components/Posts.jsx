@@ -16,7 +16,8 @@ export function Posts() {
         error,
         hasNextPage,
         fetchNextPage,
-        isFetchingNextPage
+        isFetchingNextPage,
+        isFetchNextPageError
     } = useInfiniteQuery({
         queryKey: ['posts'],
         queryFn: ({ pageParam }) => fetchPosts(pageParam),
@@ -69,7 +70,7 @@ export function Posts() {
                             </>
                         ) : (
                             <>
-                                {posts.pages.map((page, index) => (
+                                {posts?.pages?.map((page, index) => (
                                     <React.Fragment key={index}>
                                         {page.results.map((post) => (
                                             <PostCard

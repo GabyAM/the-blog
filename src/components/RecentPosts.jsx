@@ -46,7 +46,7 @@ export function RecentPosts() {
                 ) : error ? (
                     <SectionError></SectionError>
                 ) : (
-                    posts.map((post, index) => (
+                    posts?.map((post, index) => (
                         <React.Fragment key={post._id}>
                             <div
                                 className={`recent-post variant-${Math.floor(Math.random() * 3) + 1}`}
