@@ -1,4 +1,4 @@
-import API_URL from '../constants.js';
+import { API_URL } from '../constants.js';
 
 export function submitErrorLog(error) {
     return fetch(API_URL + '/error/log', {

@@ -2,7 +2,7 @@ import '../styles/header.css';
 import { useAuth } from '../hooks/useAuth';
 import { Link } from 'react-router-dom';
 import avatarPlaceholder from '../assets/profile.png';
-import API_URL from '../constants';
+import { IMAGES_URL } from '../constants';
 
 export function Header({ sticky }) {
     const { token: currentUser, removeToken } = useAuth();
@@ -37,10 +37,9 @@ export function Header({ sticky }) {
                                 <div className="image-container">
                                     <img
                                         src={
-                                            currentUser.image ===
-                                            '/images/profile.png'
+                                            currentUser.image === 'profile.png'
                                                 ? avatarPlaceholder
-                                                : API_URL + currentUser.image
+                                                : IMAGES_URL + currentUser.image
                                         }
                                     ></img>
                                 </div>

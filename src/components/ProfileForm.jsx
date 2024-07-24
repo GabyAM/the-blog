@@ -3,7 +3,7 @@ import { ImageInput } from './ImageInput';
 import { useForm } from 'react-hook-form';
 import { CaretIcon, ErrorIcon } from './Icons';
 import '../styles/profileform.css';
-import API_URL from '../constants';
+import { IMAGES_URL } from '../constants';
 
 export function ProfileForm({ user, onSubmit, onCancel }) {
     const [isPasswordFormOpen, setIsPasswordFormOpen] = useState(false);
@@ -29,7 +29,7 @@ export function ProfileForm({ user, onSubmit, onCancel }) {
         getValues
     } = useForm({
         defaultValues: {
-            image: API_URL + user.image,
+            image: IMAGES_URL + user.image,
             name: user.name,
             email: user.email,
             oldPassword: '',

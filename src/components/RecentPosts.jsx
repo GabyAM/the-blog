@@ -7,7 +7,7 @@ import { SectionError } from './SectionError';
 import he from 'he';
 import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
 import { fetchRecentPosts } from '../api/post';
-import API_URL from '../constants';
+import { IMAGES_URL } from '../constants';
 
 export function RecentPosts() {
     const {
@@ -47,9 +47,9 @@ export function RecentPosts() {
                                         <img
                                             src={
                                                 post.image ===
-                                                '/images/post_thumbnail_placeholder.png'
+                                                'post_thumbnail_placeholder.png'
                                                     ? postThumbnailPlaceholder
-                                                    : API_URL + post.image
+                                                    : IMAGES_URL + post.image
                                             }
                                         ></img>
                                     </div>

@@ -1,5 +1,5 @@
 import { ServerError } from '../utils/error';
-import API_URL from '../constants.js';
+import { API_URL } from '../constants.js';
 
 export function fetchComment(id) {
     return fetch(API_URL + `/comment/${id}`).then((res) => {

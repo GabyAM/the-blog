@@ -10,7 +10,7 @@ import { useComments } from '../hooks/useComments';
 import { SectionError } from './SectionError';
 import { formatDateToDistance } from '../utils/date';
 import avatarPlaceholder from '../assets/profile.png';
-import API_URL from '../constants';
+import { IMAGES_URL } from '../constants';
 
 export function Comment({ comment, depth = 1 }) {
     const { encodedToken: token, token: currentUser } = useAuth();
@@ -97,9 +97,9 @@ export function Comment({ comment, depth = 1 }) {
                         <div className="image-container">
                             <img
                                 src={
-                                    comment.user.image === '/images/profile.png'
+                                    comment.user.image === 'profile.png'
                                         ? avatarPlaceholder
-                                        : API_URL + comment.user.image
+                                        : IMAGES_URL + comment.user.image
                                 }
                             ></img>
                         </div>

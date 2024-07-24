@@ -17,7 +17,7 @@ import {
 import { PageError } from './PageError';
 import he from 'he';
 import postThumbnailPlaceholder from '../assets/post_thumbnail_placeholder.png';
-import API_URL from '../constants';
+import { IMAGES_URL } from '../constants';
 
 export function Post() {
     const { id } = useParams();
@@ -129,9 +129,9 @@ export function Post() {
                                         <img
                                             src={
                                                 post.image ===
-                                                '/images/post_thumbnail_placeholder.png'
+                                                'post_thumbnail_placeholder.png'
                                                     ? postThumbnailPlaceholder
-                                                    : API_URL + post.image
+                                                    : IMAGES_URL + post.image
                                             }
                                         ></img>
                                     </div>
