@@ -14,7 +14,7 @@ This project was created as a part of The Odin Project Nodejs course curriculum'
 
 ## Tech Stack
 
-Made with React and CSS. Built with Vite. 
+[![Thecnologies used (React, CSS, Vite, Figma)](https://skillicons.dev/icons?i=react,css,vite,figma)](https://skillicons.dev)
 
 ## Features
 
